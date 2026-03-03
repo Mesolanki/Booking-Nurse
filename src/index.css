@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:root {
+  --deep-twilight: #03045eff;
+  --bright-teal-blue: #0077b6ff;
+  --turquoise-surf: #00b4d8ff;
+  --white: #ffffff;
+}
+

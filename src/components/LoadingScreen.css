@@ -1,0 +1,101 @@
+/* .loader-container {
+  position: fixed;
+  inset: 0;
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loader-content {
+  text-align: center;
+}
+
+.loader-icon {
+  color: var( --bright-teal-blue); 
+  animation: heartbeat 1.5s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  15% { transform: scale(1.3); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.15); }
+  60% { transform: scale(1); }
+}
+
+@keyframes loading-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+} */
+ .loader-container {
+  position: fixed;
+  inset: 0;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.pill-animation-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The spinning rounded border */
+.outer-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 4px solid var(--light-cyan);
+  border-top: 4px solid var(--bright-teal-blue);
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
+}
+
+/* The inner solid circle holding the icon */
+.inner-pill-circle {
+  width: 70px;
+  height: 70px;
+  background-color: var(--bright-teal-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  animation: pulse-rounded 2s ease-in-out infinite;
+  box-shadow: 0 8px 20px rgba(0, 119, 182, 0.2);
+}
+
+.loader-text {
+  color: var(--deep-twilight);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+/* Animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse-rounded {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
