@@ -1,0 +1,132 @@
+.appointment-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(3, 4, 94, 0.08);
+    border: 1px solid rgba(202, 240, 248, 0.5);
+    max-width: 700px;
+    margin: 40px auto;
+}
+
+.form-title {
+    color: var(--deep-twilight);
+    font-weight: 800;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gray-text);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 1px solid #e1e8f0;
+    padding: 12px 15px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--bright-teal-blue);
+    box-shadow: 0 0 0 4px rgba(0, 119, 182, 0.1);
+    outline: none;
+}
+
+.pm-btn-primary {
+    background-color: var(--bright-teal-blue);
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pm-btn-primary:hover {
+    background-color: var(--deep-twilight);
+    transform: translateY(-2px);
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Styling for the Receipt Upload */
+.file-upload-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    background-color: #f0f7ff;
+    border: 2px dashed var(--frosted-blue);
+    border-radius: 12px;
+    color: var(--bright-teal-blue);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.file-upload-label:hover {
+    background-color: var(--light-cyan);
+    border-color: var(--bright-teal-blue);
+}
+
+.file-input-hidden {
+    display: none;
+}
+
+.form-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header-icon {
+    color: var(--bright-teal-blue);
+    margin-bottom: 10px;
+    size: 40px;
+}
+
+.text-muted {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 5px;
+    display: block;
+}
+
+.pm-btn-primary {
+    background-color: var(--bright-teal-blue);
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

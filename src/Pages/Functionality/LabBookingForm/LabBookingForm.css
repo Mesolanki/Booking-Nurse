@@ -1,0 +1,33 @@
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(3, 4, 94, 0.5); /* Deep Twilight Overlay */
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Ensures it is on top of everything */
+}
+
+.custom-modal-content {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 2rem;
+    width: 90%;
+    max-width: 420px;
+}
+
+.success-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    background-color: #28a745; /* Success Green */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
+}

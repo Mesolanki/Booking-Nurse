@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
 import {
     Bandage,
     Activity,
@@ -11,18 +12,36 @@ import {
 } from 'lucide-react';
 import './AllServices.css';
 import Hero from '../components/Hero';
+import { useNavigate } from 'react-router-dom';
+import api  from '../Service/Api';
+
+const iconMap = {
+    Bandage: Bandage,
+    Activity: Activity,
+    Stethoscope: Stethoscope,
+    Pill: Pill,
+    Accessibility: Accessibility,
+    HeartHandshake: HeartHandshake,
+    TestTube: TestTube,
+    Video: Video,
+    
+};
 
 const AllServices = () => {
-    const services = [
-        { id: 1, title: 'Wound Care', icon: <Bandage /> },
-        { id: 2, title: 'Post-surgery', icon: <Activity /> },
-        { id: 3, title: 'Chronic Illness Management', icon: <Stethoscope /> },
-        { id: 4, title: 'Medication Management', icon: <Pill /> },
-        { id: 5, title: 'Physical Therapy Assistance', icon: <Accessibility /> },
-        { id: 6, title: 'Palliative Care', icon: <HeartHandshake /> },
-        { id: 7, title: 'Lab Test Assistance', icon: <TestTube /> },
-        { id: 8, title: 'Telehealth Support', icon: <Video /> },
-    ];
+    const [services, setServices] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const res = await api.get("/services");
+                setServices(res.data);
+            } catch (error) {
+                console.error("Error fetching services:", error);
+            }
+        };
+        fetchServices();
+    }, []);
 
     return (
         <main className="page-wrapper">
@@ -30,21 +49,36 @@ const AllServices = () => {
                 title="Our Services"
                 currentPage="Services"
                 bgImage="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80"
-            />            <div className="container">
+            />
+            <div className="container">
                 <section className="services-grid">
-                    {services.map((service) => (
-                        <div key={service.id} className="service-card">
-                            <div className="icon-holder">
-                                <div className="blob-shape"></div>
-                                <div className="icon-content">{service.icon}</div>
+                    {services.map((service) => {
+                        const IconComponent = iconMap[service.icon] || Activity;
+
+                        return (
+                            <div key={service.id} className="service-card">
+                                <div className="icon-holder">
+                                    <div className="blob-shape"></div>
+                                    <div className="icon-content">
+                                        <IconComponent size={32} />
+                                    </div>
+                                </div>
+
+                                <h2 className="card-title">{service.title}</h2>
+
+                                <p className="card-desc">
+                                    {service.description || "Providing professional care tailored to your needs."}
+                                </p>
+
+                                <button
+                                    className="explore-link"
+                                    onClick={() => navigate(`/services/${service.title.toLowerCase().replace(/\s+/g, '-')}`)}
+                                >
+                                    Explore More
+                                </button>
                             </div>
-                            <h2 className="card-title">{service.title}</h2>
-                            <p className="card-desc">
-                                Providing professional care and support tailored to your specific medical needs for a faster recovery.
-                            </p>
-                            <button className="explore-link">Explore More</button>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </section>
             </div>
         </main>

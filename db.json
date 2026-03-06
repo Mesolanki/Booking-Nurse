@@ -1,0 +1,290 @@
+{
+  "nurses": [
+    {
+      "id": "1",
+      "name": "Sarah Jenkins",
+      "category": "Wound Care",
+      "age": 29,
+      "dob": "1995-05-12",
+      "mobile": "+1-245-592-1125",
+      "email": "s.jenkins@portea.com",
+      "experience_years": 7,
+      "hospital": "City General Hospital",
+      "speciality": "ICU & Trauma",
+      "description": "Expert in managing high-pressure environments and post-operative recovery for trauma patients.",
+      "image": "https://img.freepik.com/free-photo/female-doctor-hospital_23-2148827786.jpg",
+      "education": "B.Sc. in Nursing, Johns Hopkins University",
+      "availability": "Full-time",
+      "rating": 4.9,
+      "status": "Online"
+    },
+    {
+      "id": "2",
+      "name": "Michael Chen",
+      "category": "Post Surgery",
+      "age": 34,
+      "dob": "1990-08-22",
+      "mobile": "+1-245-592-1126",
+      "email": "m.chen@portea.com",
+      "experience_years": 10,
+      "hospital": "St. Mary's Medical Center",
+      "speciality": "Elderly Care",
+      "description": "Dedicated to improving the quality of life for seniors through compassionate chronic illness management.",
+      "image": "https://img.freepik.com/free-photo/male-doctor-hospital_23-2148827774.jpg",
+      "education": "Advanced Diploma in Geriatric Nursing",
+      "availability": "Part-time",
+      "rating": 4.8,
+      "status": "Offline"
+    },
+    {
+      "id": "3",
+      "name": "Elena Rodriguez",
+      "category": "Physical Therapy Assistance",
+      "age": 27,
+      "dob": "1997-11-03",
+      "mobile": "+1-245-592-1127",
+      "email": "e.rod@portea.com",
+      "experience_years": 4,
+      "hospital": "Sunrise Children's Health",
+      "speciality": "Pediatric Care",
+      "description": "Specializes in neonatal care and physical therapy assistance for children with mobility challenges.",
+      "image": "https://img.freepik.com/free-photo/beautiful-female-doctor_23-2148827779.jpg",
+      "education": "M.Sc. in Pediatric Nursing",
+      "availability": "Full-time",
+      "rating": 5,
+      "status": "Online"
+    },
+    {
+      "id": "4",
+      "name": "Aamir Collins",
+      "category": "Medication Management",
+      "age": 41,
+      "dob": "1983-01-15",
+      "mobile": "+1-245-592-1128",
+      "email": "a.collins@portea.com",
+      "experience_years": 15,
+      "hospital": "Metropolitan Heart Institute",
+      "speciality": "Cardiac Rehabilitation",
+      "description": "Focuses on post-surgery recovery and long-term medication management for cardiac patients.",
+      "image": "https://img.freepik.com/free-photo/male-doctor-hospital_23-2148827774.jpg",
+      "education": "Post-Graduate in Cardiac Care",
+      "availability": "Full-time",
+      "rating": 4.7,
+      "status": "Online"
+    },
+    {
+      "id": "5",
+      "name": "Priya Sharma",
+      "category": "Illness Management",
+      "age": 31,
+      "dob": "1993-03-20",
+      "mobile": "+1-245-592-1129",
+      "email": "p.sharma@portea.com",
+      "experience_years": 8,
+      "hospital": "Apollo Health City",
+      "speciality": "Diabetes Management",
+      "description": "Expert in long-term diabetic care and lifestyle counseling for chronic patients.",
+      "image": "https://img.freepik.com/free-photo/smiling-doctor-with-stethoscope_23-2148827775.jpg",
+      "education": "B.Sc. in Nursing, AIIMS",
+      "availability": "Full-time",
+      "rating": 4.6,
+      "status": "Offline"
+    },
+    {
+      "id": "6",
+      "name": "David Wilson",
+      "category": "Palliative Care",
+      "age": 45,
+      "dob": "1979-12-10",
+      "mobile": "+1-245-592-1130",
+      "email": "d.wilson@portea.com",
+      "experience_years": 20,
+      "hospital": "Mercy Hospice Center",
+      "speciality": "End-of-life Care",
+      "description": "Specializes in providing comfort and emotional support for terminally ill patients.",
+      "image": "https://img.freepik.com/free-photo/doctor-working-hospital_23-2148827780.jpg",
+      "education": "Specialized Certification in Palliative Care",
+      "availability": "Part-time",
+      "rating": 4.9,
+      "status": "Online"
+    },
+    {
+      "id": "7",
+      "name": "Jessica Taylor",
+      "category": "Lab Test Assistance",
+      "age": 26,
+      "dob": "1998-06-25",
+      "mobile": "+1-245-592-1131",
+      "email": "j.taylor@portea.com",
+      "experience_years": 3,
+      "hospital": "Central Diagnostics",
+      "speciality": "Phlebotomy",
+      "description": "Fast and efficient in home sample collection and patient diagnostic prep.",
+      "image": "https://img.freepik.com/free-photo/female-nurse-blue-uniform_23-2148827782.jpg",
+      "education": "Diploma in Medical Lab Technology",
+      "availability": "Full-time",
+      "rating": 4.5,
+      "status": "Online"
+    },
+    {
+      "id": "8",
+      "name": "Liam O'Connor",
+      "category": "Online Video Consultation",
+      "age": 38,
+      "dob": "1986-09-14",
+      "mobile": "+1-245-592-1132",
+      "email": "l.oconnor@portea.com",
+      "experience_years": 12,
+      "hospital": "Global TeleHealth Network",
+      "speciality": "General Nursing",
+      "description": "Expert in remote triage and explaining medical reports via video calls.",
+      "image": "https://img.freepik.com/free-photo/male-doctor-portrait_23-2148827781.jpg",
+      "education": "B.Sc. in Nursing, University of Toronto",
+      "availability": "Full-time",
+      "rating": 4.8,
+      "status": "Online"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Wound Care"
+    },
+    {
+      "id": "2",
+      "name": "Post-surgery"
+    },
+    {
+      "id": "3",
+      "name": "Chronic Illness Management"
+    },
+    {
+      "id": "4",
+      "name": "Medical Equipment Assistance"
+    },
+    {
+      "id": "5",
+      "name": "Physical Therapy Assistance"
+    },
+    {
+      "id": "6",
+      "name": "Lab Test Assistance"
+    },
+    {
+      "id": "7",
+      "name": "Online Video Consultation"
+    },
+    {
+      "id": "8",
+      "name": "Palliative Care"
+    }
+  ],
+  "services": [
+    {
+      "id": "1",
+      "title": "Wound Care",
+      "description": "Professional wound care services including dressing changes, infection management, and post-surgical care.",
+      "icon": "Bandage"
+    },
+    {
+      "id": "2",
+      "title": "Post-surgery",
+      "description": "Comprehensive post-surgical care including medication management, mobility assistance, and recovery monitoring.",
+      "icon": "Activity"
+    },
+    {
+      "id": "3",
+      "title": "Chronic Illness Management",
+      "description": "Specialized care for seniors including chronic illness management, mobility support, and companionship.",
+      "icon": "Stethoscope"
+    },
+    {
+      "id": "4",
+      "title": "Medical Equipment Assistance",
+      "description": "Assistance with the use and maintenance of medical equipment for home care.",
+      "icon": "DeviceMobile"
+    },
+    {
+      "id": "5",
+      "title": "Physical Therapy Assistance",
+      "description": "Assistance with physical therapy exercises, mobility support, and rehabilitation for patients recovering from injuries or surgeries.",
+      "icon": "Accessibility"
+    },
+    {
+      "id": "6",
+      "title": "Lab Test Assistance",
+      "description": "Assistance with lab tests including sample collection, transportation, and result monitoring for accurate diagnosis.",
+      "icon": "TestTube"
+    },
+    {
+      "id": "7",
+      "title": "Online Video Consultation",
+      "description": "Convenient virtual consultations with healthcare professionals from the comfort of your home.",
+      "icon": "Video"
+    },
+    {
+      "id": "8",
+      "title": "Palliative Care",
+      "description": "Compassionate care for patients with serious illnesses focusing on symptom management and quality of life.",
+      "icon": "HeartHandshake"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Oxygen Concentrator",
+      "price_per_month": 4500,
+      "image": "https://img.freepik.com/free-photo/oxygen-concentrator-medical-device_23-2149072433.jpg",
+      "description": "High-purity oxygen supply for respiratory support at home.",
+      "features": [
+        "1-5 Liters/min",
+        "Quiet operation",
+        "Portable with wheels"
+      ]
+    },
+    {
+      "id": "e2",
+      "name": "Motorized Hospital Bed",
+      "price_per_month": 3500,
+      "image": "https://img.freepik.com/free-photo/hospital-bed-clinic_23-2148943245.jpg",
+      "description": "Fully adjustable head and foot sections for maximum comfort.",
+      "features": [
+        "Remote controlled",
+        "Side rails included",
+        "Pressure mattress"
+      ]
+    },
+    {
+      "id": "e3",
+      "name": "Wheelchair (Foldable)",
+      "price_per_month": 800,
+      "image": "https://img.freepik.com/free-photo/wheelchair-isolated-white-background_1253-30.jpg",
+      "description": "Lightweight, durable wheelchair for easy mobility.",
+      "features": [
+        "Foldable frame",
+        "Cushioned seat",
+        "Safety brakes"
+      ]
+    }
+  ],
+  "PatientRegister": [],
+  "lab_bookings": [
+    {
+      "id": "1772767331246",
+      "testType": "Blood Sugar / HbA1c",
+      "patientName": "Solanki Mihir",
+      "patientAge": "21",
+      "gender": "Male",
+      "houseNo": "c-136",
+      "society": "sas",
+      "area": "zxzc 12345",
+      "bookingDate": "2026-03-06",
+      "timeSlot": "06:00 AM - 08:00 AM",
+      "isFasting": false,
+      "technicianName": "Expert Technician",
+      "status": "Pending",
+      "amount": 500,
+      "bookedAt": "2026-03-06T03:22:11.246Z"
+    }
+  ]
+}

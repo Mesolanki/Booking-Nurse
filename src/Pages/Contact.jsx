@@ -1,160 +1,22 @@
 import React from "react";
+import Hero from "../components/Hero";
+import { img3 } from "../assets/Images/image";
 
 export default function Contact() {
   return (
     <div className="contact-page">
-      <style>{`
-        :root{
-          --deep-twilight: #03045eff;
-          --bright-teal-blue: #0077b6ff;
-          --turquoise-surf: #00b4d8ff;
-          --frosted-blue: #90e0efff;
-          --light-cyan: #caf0f8ff;
-        }
-
-        .contact-page{
-          background: radial-gradient(1200px 700px at 50% 12%,
-            rgba(144,224,239,.35),
-            rgba(202,240,248,.18) 55%,
-            #ffffff 85%);
-          color: #0b1220;
-        }
-
-       
-        
-
-        
-
-        /* SECTION HEAD */
-        .pill{
-          display:inline-block;
-          padding: 4px 10px;
-          border-radius: 999px;
-          font-size: 12px;
-          font-weight: 700;
-          color: var(--bright-teal-blue);
-          border: 1px solid rgba(0,180,216,.35);
-          background: rgba(202,240,248,.50);
-        }
-
-        .big-title{
-          font-weight: 900;
-          letter-spacing: -0.02em;
-          color: #0b1220;
-          margin-top: 10px;
-          margin-bottom: 10px;
-        }
-
-        .muted-para{
-          color: #6b7280;
-          line-height: 1.9;
-          max-width: 520px;
-        }
-
-        /* CARDS */
-        .soft-card{
-          background: rgba(255,255,255,.94);
-          border: 1px solid rgba(144,224,239,.45);
-          border-radius: 18px;
-          box-shadow: 0 18px 45px rgba(3,4,94,.08);
-        }
-
-        .info-img{
-          border-radius: 16px;
-          overflow: hidden;
-          background: linear-gradient(135deg, rgba(0,119,182,.95), rgba(0,180,216,.65));
-          min-height: 170px;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
-        }
-
-        .info-img img{
-          width: 100%;
-          max-width: 210px;
-          height: auto;
-          filter: drop-shadow(0 16px 22px rgba(3,4,94,.18));
-        }
-
-        .icon-badge{
-          width: 36px;
-          height: 36px;
-          border-radius: 10px;
-          background: rgba(0,180,216,.12);
-          border: 1px solid rgba(0,180,216,.30);
-          display:grid;
-          place-items:center;
-          color: var(--bright-teal-blue);
-          flex: 0 0 auto;
-        }
-
-        .label{
-          font-size: 12px;
-          font-weight: 800;
-          color: #0b1220;
-          margin-bottom: 2px;
-        }
-
-        .value{
-          margin:0;
-          color:#1f2937;
-          font-weight: 600;
-          font-size: 14px;
-        }
-
-        /* FORM */
-        .form-title{
-          font-weight: 900;
-          color:#0b1220;
-          margin-bottom: 14px;
-        }
-
-        .form-control, .form-select{
-          border-radius: 10px;
-          border: 1px solid rgba(148,163,184,.55);
-          padding: 10px 12px;
-          box-shadow: none !important;
-        }
-
-        .form-control:focus, .form-select:focus{
-          border-color: rgba(0,180,216,.75);
-          box-shadow: 0 0 0 .2rem rgba(0,180,216,.18) !important;
-        }
-
-        .send-btn{
-          background: var(--bright-teal-blue);
-          border: 0;
-          font-weight: 800;
-          padding: 10px 18px;
-          border-radius: 10px;
-          box-shadow: 0 14px 28px rgba(0,119,182,.22);
-        }
-
-        .send-btn:hover{
-          background: #0468a1;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 576px){
-          .contact-hero{ min-height: 240px; border-radius: 16px; }
-          .hero-title{ font-size: 2rem; }
-          .big-title{ font-size: 2.05rem; }
-          .muted-para{ max-width: 100%; }
-        }
-
-        @media (min-width: 577px){
-          .hero-title{ font-size: 2.4rem; }
-          .big-title{ font-size: 2.6rem; }
-        }
-      `}</style>
 
       {/* HERO */}
+      <Hero 
+       title="Contact"
+                    currentPage="Contact"
+                    bgImage={img3}
       
+      />
 
       {/* BODY */}
       <div className="container pb-5">
-        <div className="row g-4 justify-content-center align-items-start">
+        <div className="row g-4 justify-content-center align-items-start p-2">
           {/* LEFT */}
           <div className="col-lg-6">
             <div className="pt-2">
@@ -231,7 +93,7 @@ export default function Contact() {
                       placeholder="Your Real Name"
                       type="text"
                       required
-                    />
+                      />
                   </div>
 
                   <div className="col-md-6">
@@ -267,7 +129,7 @@ export default function Contact() {
                       placeholder="What Your Urgency"
                       type="text"
                       required
-                    />
+                      />
                   </div>
 
                   <div className="col-12">
@@ -279,7 +141,7 @@ export default function Contact() {
                       placeholder="Write your detail urgency here..."
                       rows="5"
                       required
-                    />
+                      />
                   </div>
 
                   <div className="col-12 pt-1">
@@ -295,6 +157,151 @@ export default function Contact() {
 
         <div className="py-2" />
       </div>
+<style>{`
+  :root{
+    --deep-twilight: #03045eff;
+    --bright-teal-blue: #0077b6ff;
+    --turquoise-surf: #00b4d8ff;
+    --frosted-blue: #90e0efff;
+    --light-cyan: #caf0f8ff;
+  }
+
+  .contact-page{
+    background: radial-gradient(1200px 700px at 50% 12%,
+      rgba(144,224,239,.35),
+      rgba(202,240,248,.18) 55%,
+      #ffffff 85%);
+    color: #0b1220;
+  }
+
+ 
+  
+
+  
+
+  /* SECTION HEAD */
+  .pill{
+    display:inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--bright-teal-blue);
+    border: 1px solid rgba(0,180,216,.35);
+    background: rgba(202,240,248,.50);
+  }
+
+  .big-title{
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: #0b1220;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .muted-para{
+    color: #6b7280;
+    line-height: 1.9;
+    max-width: 520px;
+  }
+
+  /* CARDS */
+  .soft-card{
+    background: rgba(255,255,255,.94);
+    border: 1px solid rgba(144,224,239,.45);
+    border-radius: 18px;
+    box-shadow: 0 18px 45px rgba(3,4,94,.08);
+  }
+
+  .info-img{
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(0,119,182,.95), rgba(0,180,216,.65));
+    min-height: 170px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
+  }
+
+  .info-img img{
+    width: 100%;
+    max-width: 210px;
+    height: auto;
+    filter: drop-shadow(0 16px 22px rgba(3,4,94,.18));
+  }
+
+  .icon-badge{
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(0,180,216,.12);
+    border: 1px solid rgba(0,180,216,.30);
+    display:grid;
+    place-items:center;
+    color: var(--bright-teal-blue);
+    flex: 0 0 auto;
+  }
+
+  .label{
+    font-size: 12px;
+    font-weight: 800;
+    color: #0b1220;
+    margin-bottom: 2px;
+  }
+
+  .value{
+    margin:0;
+    color:#1f2937;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  /* FORM */
+  .form-title{
+    font-weight: 900;
+    color:#0b1220;
+    margin-bottom: 14px;
+  }
+
+  .form-control, .form-select{
+    border-radius: 10px;
+    border: 1px solid rgba(148,163,184,.55);
+    padding: 10px 12px;
+    box-shadow: none !important;
+  }
+
+  .form-control:focus, .form-select:focus{
+    border-color: rgba(0,180,216,.75);
+    box-shadow: 0 0 0 .2rem rgba(0,180,216,.18) !important;
+  }
+
+  .send-btn{
+    background: var(--bright-teal-blue);
+    border: 0;
+    font-weight: 800;
+    padding: 10px 18px;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0,119,182,.22);
+  }
+
+  .send-btn:hover{
+    background: #0468a1;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 576px){
+    .contact-hero{ min-height: 240px; border-radius: 16px; }
+    .hero-title{ font-size: 2rem; }
+    .big-title{ font-size: 2.05rem; }
+    .muted-para{ max-width: 100%; }
+  }
+
+  @media (min-width: 577px){
+    .hero-title{ font-size: 2.4rem; }
+    .big-title{ font-size: 2.6rem; }
+  }
+`}</style>
     </div>
   );
 }

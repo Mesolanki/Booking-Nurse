@@ -1,23 +1,16 @@
-:root {
-    --deep-twilight: #03045eff;
-    --bright-teal-blue: #0077b6ff;
-    --turquoise-surf: #00b4d8ff;
-    --frosted-blue: #90e0efff;
-    --light-cyan: #caf0f8ff;
-    --white: #ffffff;
-    --gray-text: #666666;
-    --header-overlay: rgba(3, 4, 94, 0.85);
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #f8fbff;
-    font-family: 'Inter', system-ui, sans-serif;
+.animate-card {
+    animation: fadeInUp 0.6s ease-out forwards;
 }
 
 .hero-section {
@@ -28,7 +21,6 @@ body {
     justify-content: center;
     background-image: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80');
     background-size: cover;
-
     background-position: center;
     color: var(--white);
     margin-bottom: 60px;
@@ -40,10 +32,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--header-overlay);
-    background: linear-gradient(to right,
-            rgba(3, 4, 94, 0.9),
-            rgba(0, 119, 182, 0.7));
+    background: linear-gradient(to right, rgba(3, 4, 94, 0.9), rgba(0, 119, 182, 0.7));
     z-index: 1;
 }
 
@@ -59,29 +48,6 @@ body {
     margin-bottom: 10px;
 }
 
-.breadcrumb {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.home-link {
-    color: var(--white);
-    cursor: pointer;
-}
-
-.separator {
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.current-page {
-    color: var(--turquoise-surf);
-    /* Your specific color route */
-}
-
-/* --- GRID & CONTAINER STYLES --- */
 .container {
     max-width: 1200px;
     width: 100%;
@@ -106,6 +72,7 @@ body {
     flex-direction: column;
     align-items: flex-start;
     border: 1px solid rgba(202, 240, 248, 0.5);
+    height: 100%;
 }
 
 .service-card:hover {
@@ -161,14 +128,26 @@ body {
     font-size: 1rem;
     cursor: pointer;
     padding: 0;
-    transition: color 0.2s;
+    transition: all 0.2s ease;
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .explore-link:hover {
     color: var(--bright-teal-blue);
 }
 
-/* --- PAGINATION --- */
+.explore-link::after {
+    content: '→';
+    transition: transform 0.2s;
+}
+
+.explore-link:hover::after {
+    transform: translateX(5px);
+}
+
 .pagination-nav {
     display: flex;
     justify-content: center;
@@ -176,8 +155,7 @@ body {
     gap: 12px;
 }
 
-.page-num,
-.arrow-btn {
+.page-num, .arrow-btn {
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -211,4 +189,4 @@ body {
     .services-grid {
         grid-template-columns: 1fr;
     }
-}
+} 

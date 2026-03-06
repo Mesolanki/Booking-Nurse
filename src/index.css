@@ -4,6 +4,39 @@
   --deep-twilight: #03045eff;
   --bright-teal-blue: #0077b6ff;
   --turquoise-surf: #00b4d8ff;
+  --frosted-blue: #90e0efff;
+  --light-cyan: #caf0f8ff;
   --white: #ffffff;
+  --gray-text: #666666;
+  --header-overlay: rgba(3, 4, 94, 0.85);
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f8fbff;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.bg-success {
+  background-color: #28a745 !important;
+}
+
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(3, 4, 94, 0.5);
+  /* Deep Twilight Overlay */
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}

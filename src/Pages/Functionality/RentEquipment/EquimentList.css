@@ -1,0 +1,44 @@
+.hover-up {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-up:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(3, 4, 94, 0.08) !important;
+}
+
+.animate-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(3, 4, 94, 0.12) !important;
+}
+
+.border-hover:hover {
+    border: 1px solid var(--frosted-blue) !important;
+}
+.lh-sm {
+    line-height: 1.25 !important;
+}
+
+.text-twilight {
+    color: var(--deep-twilight);
+}
+
+.btn-surf {
+    background-color: var(--turquoise-surf);
+    color: white;
+    border: none;
+}
+
+.btn-surf:hover {
+    background-color: var(--bright-teal-blue);
+    color: white;
+    transform: scale(1.05);
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0 !important;
+}
