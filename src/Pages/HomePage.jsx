@@ -1,1300 +1,1732 @@
-import React, { useEffect, useMemo } from "react";
+import React from "react";
+import {
+  FaUserNurse,
+  FaHandsHelping,
+  FaAmbulance,
+  FaHeartbeat,
+  FaStethoscope,
+  FaHospitalUser,
+  FaBaby,
+  FaPhoneAlt,
+  FaLeaf,
+  FaAppleAlt,
+  FaBuilding,
+  FaStar,
+  FaCheckCircle,
+  FaClock,
+} from "react-icons/fa";
+import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
 
-/**
- * ✅ UI Polish Update (Bootstrap + scoped CSS)
- * - ✅ Global page side padding (content no longer touches screen edge)
- * - ✅ Hero banner more “premium” + better mobile spacing
- * - ✅ How We Work section redesigned (equal height cards + cleaner grid + responsive)
- * - ✅ Keeps your theme colors + bootstrap only
- */
+const heroStats = [
+  {
+    title: "5 Star Clients Rating",
+    desc: "Caring home care with trusted support.",
+    image:
+      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=300&q=80",
+  },
+];
+
+const careServices = [
+  { title: "Nursing\nCare", icon: FaUserNurse },
+  { title: "Care\nTaker", icon: FaHandsHelping },
+  { title: "Elder\nCare", icon: FaHospitalUser },
+  { title: "Ambulance", icon: FaAmbulance },
+  { title: "Medical\nEquipment", icon: FaHeartbeat },
+  { title: "Doctor\nAt\nHome", icon: FaStethoscope },
+  { title: "ICU\nSetup\nAt\nHome", icon: FaHospitalUser },
+];
+
+const medicalServices = [
+  { title: "Physiotherapist\nAt Home", icon: FaHandsHelping },
+  { title: "Maternity\nCare", icon: FaBaby },
+  { title: "Medical\nTest At\nHome", icon: FaStethoscope },
+  { title: "Call Us", icon: FaPhoneAlt, active: true },
+  { title: "Holistic\nCare", icon: FaLeaf },
+  { title: "Nutrition\nConsultation", icon: FaAppleAlt },
+  { title: "Corporate\nWellness", icon: FaBuilding },
+];
+
+const trustPoints = [
+  {
+    icon: FaCheckCircle,
+    title: "Goal Oriented Solution",
+    desc: "Tailored support that fits every patient need with reliable home care outcomes.",
+  },
+  {
+    icon: FaStar,
+    title: "Experienced Staff Team",
+    desc: "Our professional caregivers and medical experts deliver dependable service.",
+  },
+];
+
+const whyChoose = [
+  {
+    icon: FaHandsHelping,
+    title: "Compassionate Approach",
+    desc: "We create personalized care plans with warmth, comfort and attention to detail.",
+  },
+  {
+    icon: FaClock,
+    title: "24/7 Availability",
+    desc: "Round-the-clock care coordination and fast response whenever support is needed.",
+  },
+];
+
+const processSteps = [
+  {
+    no: "01",
+    title: "Initial Consultation",
+    desc: "Discuss patient needs, lifestyle and goals with our care experts.",
+  },
+  {
+    no: "02",
+    title: "Personalized Care Plan",
+    desc: "A structured and flexible care plan is prepared for the patient.",
+  },
+  {
+    no: "03",
+    title: "Caregiver Matching",
+    desc: "We assign a suitable caregiver or nurse based on the exact requirement.",
+  },
+  {
+    no: "04",
+    title: "Start Of Services",
+    desc: "Care begins smoothly with regular follow-up, support and monitoring.",
+  },
+];
+
+const testimonials = [
+  {
+    name: "Riya Shah",
+    role: "Family Member",
+    text: "The nursing support was very caring and professional. Everything felt safe and organized.",
+  },
+  {
+    name: "Amit Patel",
+    role: "Client",
+    text: "Quick coordination, trained staff and a very smooth home care experience for my parents.",
+  },
+  {
+    name: "Karan Mehta",
+    role: "Client",
+    text: "Great response time and helpful team. Their medical care services are truly dependable.",
+  },
+];
+
+const ServiceTile = ({ item }) => {
+  const Icon = item.icon;
+  return (
+    <div className={`service-tile ${item.active ? "service-tile-active" : ""}`}>
+      <div className="tile-icon-wrap">
+        <Icon className="tile-icon" />
+      </div>
+      <div className="tile-text">
+        {item.title.split("\n").map((line, idx) => (
+          <span key={idx}>
+            {line}
+            <br />
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const SectionLabel = ({ text, center = true }) => (
+  <div className={`section-label ${center ? "text-center" : ""}`}>{text}</div>
+);
+
+const PrimaryButton = ({ children, className = "" }) => (
+  <Button className={`primary-btn border-0 rounded-pill ${className}`}>
+    {children}
+  </Button>
+);
 
 export default function HomePage() {
-  const heroImg =
-    "https://images.unsplash.com/photo-1580281658628-11e394ee3f5a?auto=format&fit=crop&w=1900&q=80";
-  const aboutDoc1 =
-    "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=900&q=80";
-  const aboutDoc2 =
-    "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=900&q=80";
-  const ctaImg =
-    "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1300&q=80";
-  const workImg =
-    "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=1200&q=80";
-  const port1 =
-    "https://images.unsplash.com/photo-1582719478171-2ff0d9f7f1d6?auto=format&fit=crop&w=1200&q=80";
-  const port2 =
-    "https://images.unsplash.com/photo-1587370560942-ad2a04eabb6d?auto=format&fit=crop&w=1200&q=80";
-  const port3 =
-    "https://images.unsplash.com/photo-1576765608866-5b3e2b5b4b6a?auto=format&fit=crop&w=1200&q=80";
-
-  const FALLBACK_IMG =
-    "data:image/svg+xml;utf8," +
-    encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">
-        <defs>
-          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0" stop-color="#03045e"/>
-            <stop offset="1" stop-color="#00b4d8"/>
-          </linearGradient>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#g)"/>
-        <circle cx="250" cy="260" r="140" fill="rgba(255,255,255,0.18)"/>
-        <circle cx="960" cy="560" r="220" fill="rgba(255,255,255,0.10)"/>
-        <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle"
-              font-family="Arial" font-size="46" font-weight="800"
-              fill="rgba(255,255,255,0.82)">Image Preview</text>
-      </svg>
-    `);
-
-  const safeImg = (src) => ({
-    src,
-    onError: (e) => (e.currentTarget.src = FALLBACK_IMG),
-  });
-
-  const services = useMemo(
-    () => [
-      {
-        title: "General Health Check-Up",
-        text: "Routine assessments to monitor overall health and detect early concerns.",
-        icon: "bi-heart-pulse-fill",
-        bg: "hp-icBg1",
-      },
-      {
-        title: "Cardiology Consultation",
-        text: "Specialized heart evaluations and care focused on long-term wellness.",
-        icon: "bi-activity",
-        bg: "hp-icBg2",
-      },
-      {
-        title: "Pediatric Wellness Care",
-        text: "Medical support for infants, children, and teens to grow healthy.",
-        icon: "bi-emoji-smile-fill",
-        bg: "hp-icBg3",
-      },
-      {
-        title: "Diagnostic Laboratory Tests",
-        text: "Accurate reports designed to support faster decisions and treatment.",
-        icon: "bi-droplet-half",
-        bg: "hp-icBg4",
-      },
-      {
-        title: "Vaccination & Immunization",
-        text: "Safe vaccines to strengthen immunity and protect against infection.",
-        icon: "bi-shield-check",
-        bg: "hp-icBg5",
-      },
-      {
-        title: "Orthopedic Care",
-        text: "Care for bones, joints, pain and injuries with tailored plans.",
-        icon: "bi-bandaid-fill",
-        bg: "hp-icBg6",
-      },
-    ],
-    []
-  );
-
-  const steps = useMemo(
-    () => [
-      {
-        n: "1",
-        t: "Listen and Understand",
-        d: "We start by listening to you and building trust from the first conversation.",
-        icon: "bi-ear-fill",
-      },
-      {
-        n: "2",
-        t: "Design Your Care Plan",
-        d: "We create a clear plan focused on comfort, trust, and recovery.",
-        icon: "bi-clipboard2-check-fill",
-      },
-      {
-        n: "3",
-        t: "Care with Compassion",
-        d: "Our team supports you at every stage with guidance and empathy.",
-        icon: "bi-hand-heart-fill",
-      },
-      {
-        n: "4",
-        t: "Healing and Beyond",
-        d: "We continue supporting you even after recovery for a stronger life.",
-        icon: "bi-stars",
-      },
-    ],
-    []
-  );
-
-  const testimonials = useMemo(
-    () => [
-      {
-        q: "They took time to understand me. Genuine care and expertise made recovery smooth.",
-        n: "James Carter",
-        r: "Orthopedic Patient",
-        stars: 5,
-      },
-      {
-        q: "Very compassionate team. Every visit felt professional and full of trust.",
-        n: "Lisa Mitchell",
-        r: "Cardiac Patient",
-        stars: 5,
-      },
-      {
-        q: "Clean clinic, quick reports, and supportive staff. I felt safe and informed.",
-        n: "Ava Robinson",
-        r: "Diagnostics Patient",
-        stars: 5,
-      },
-    ],
-    []
-  );
-
-  const partners = useMemo(
-    () => [
-      { name: "Medora", tag: "Trusted Hospitals", icon: "bi-hospital-fill" },
-      { name: "Medicalab", tag: "Lab Network", icon: "bi-droplet-fill" },
-      { name: "HealthPro", tag: "Care Partners", icon: "bi-heart-pulse" },
-      { name: "NovoCare", tag: "Modern Clinics", icon: "bi-building" },
-      { name: "Helvetia", tag: "Pharmacy Chain", icon: "bi-capsule-pill" },
-    ],
-    []
-  );
-
-  useEffect(() => {
-    const nodes = document.querySelectorAll(".hp-reveal");
-    if (!nodes.length) return;
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("hp-in");
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.14 }
-    );
-
-    nodes.forEach((n) => io.observe(n));
-    return () => io.disconnect();
-  }, []);
-
   return (
-    <div className="hp">
-      {/* ✅ Global Page Padding wrapper (so nothing touches edges) */}
-      <div className="hp-pagePad">
-        {/* ================= HERO ================= */}
-        <section className="hp-hero">
-          <div className="hp-heroBg" style={{ backgroundImage: `url(${heroImg})` }} />
-          <div className="hp-heroOverlay" />
+    <>
+      <style>{`
+        :root {
+          --deep-twilight: #03045e;
+          --bright-teal-blue: #0077b6;
+          --turquoise-surf: #00b4d8;
+          --frosted-blue: #90e0ef;
+          --light-cyan: #caf0f8;
+          --page-bg: #f5f5f2;
+          --card-white: #ffffff;
+          --muted-text: #6d7b8b;
+          --heading: #183c67;
+        }
 
-          <div className="container hp-heroContainer">
-            <div className="row align-items-center g-4">
-              <div className="col-12 col-lg-7">
-                <div className="hp-heroLeft hp-reveal hp-delay1">
-                  <span className="hp-pill">
-                    <i className="bi bi-shield-fill-check me-2" />
-                    Your Health is Our Priority
-                  </span>
+        * {
+          box-sizing: border-box;
+        }
 
-                  <h1 className="hp-heroTitle mt-3 mb-3">
-                    Promise of <br className="d-none d-md-block" />
-                    Care and Trust
-                  </h1>
+        html,
+        body {
+          overflow-x: hidden;
+        }
 
-                  <p className="hp-heroDesc mb-4">
-                    Built on integrity, compassion, and reliability — so every patient feels valued,
-                    understood, and confident.
-                  </p>
+        body {
+          margin: 0;
+          background: var(--page-bg);
+        }
 
-                  <div className="d-flex flex-column flex-sm-row gap-3">
-                    <button className="btn btn-primary hp-btn">
-                      <i className="bi bi-search-heart me-2" />
-                      Find a Nurse
-                    </button>
+        img {
+          max-width: 100%;
+          display: block;
+        }
 
-                    <a href="#cta" className="btn btn-outline-light hp-btn hp-btnGhost">
-                      <i className="bi bi-envelope-paper-heart me-2" />
-                      Contact Us
-                    </a>
-                  </div>
+        .home-page {
+          min-height: 100vh;
+          padding-top: 110px;
+          background:
+            radial-gradient(circle at 10% 10%, rgba(0, 180, 216, 0.12), transparent 25%),
+            radial-gradient(circle at 90% 20%, rgba(144, 224, 239, 0.18), transparent 25%),
+            radial-gradient(circle at 50% 90%, rgba(0, 119, 182, 0.08), transparent 30%),
+            linear-gradient(180deg, #f8f8f4 0%, #f1f1ed 40%, #f7f7f3 100%);
+          overflow-x: hidden;
+          position: relative;
+        }
 
-                  <div className="hp-miniStats mt-4">
-                    <div className="hp-miniStat">
-                      <div className="hp-miniNum">23k+</div>
-                      <div className="hp-miniLbl">Patients</div>
-                    </div>
-                    <div className="hp-miniStat">
-                      <div className="hp-miniNum">99%</div>
-                      <div className="hp-miniLbl">Satisfaction</div>
-                    </div>
-                    <div className="hp-miniStat">
-                      <div className="hp-miniNum">24/7</div>
-                      <div className="hp-miniLbl">Support</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        .home-page::before,
+        .home-page::after {
+          content: "";
+          position: fixed;
+          width: 240px;
+          height: 240px;
+          border-radius: 50%;
+          filter: blur(70px);
+          z-index: 0;
+          pointer-events: none;
+          animation: floatBlob 10s ease-in-out infinite;
+        }
 
-              <div className="col-12 col-lg-5">
-                <div className="hp-heroRight hp-reveal hp-delay2">
-                  <div className="hp-heroGlass p-4 p-md-4">
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div>
-                        <div className="hp-glassTitle">Quick Help</div>
-                        <div className="text-white-50" style={{ fontWeight: 800 }}>
-                          Chat • Call • Book
+        .home-page::before {
+          top: 80px;
+          left: -90px;
+          background: rgba(0, 180, 216, 0.12);
+        }
+
+        .home-page::after {
+          bottom: 120px;
+          right: -80px;
+          background: rgba(3, 4, 94, 0.12);
+          animation-delay: 2s;
+        }
+
+        .site-section {
+          position: relative;
+          z-index: 1;
+        }
+
+        .hero-section {
+          padding: 0;
+        }
+
+        .hero-box {
+          position: relative;
+          overflow: hidden;
+          border-radius: 0 0 28px 28px;
+          background:
+            linear-gradient(90deg, rgba(3, 4, 94, 0.82) 0%, rgba(0, 119, 182, 0.5) 48%, rgba(3, 4, 94, 0.3) 100%),
+            url("https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1600&q=80")
+            center center / cover no-repeat;
+        }
+
+        .hero-box::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            90deg,
+            rgba(3, 4, 94, 0.55) 0%,
+            rgba(3, 4, 94, 0.18) 55%,
+            rgba(3, 4, 94, 0.08) 100%
+          );
+        }
+
+        .hero-inner {
+          position: relative;
+          z-index: 2;
+          min-height: 620px;
+          display: flex;
+          align-items: center;
+          padding: 64px 0;
+        }
+
+        .mini-kicker {
+          color: var(--turquoise-surf);
+          font-size: 10px;
+          letter-spacing: 2.6px;
+          font-weight: 700;
+          text-transform: uppercase;
+          margin-bottom: 14px;
+        }
+
+        .hero-title {
+          color: #fff;
+          font-size: clamp(38px, 5vw, 78px);
+          line-height: 1.02;
+          font-weight: 800;
+          margin-bottom: 16px;
+          max-width: 540px;
+        }
+
+        .hero-title .accent {
+          color: var(--turquoise-surf);
+        }
+
+        .hero-desc {
+          color: rgba(255, 255, 255, 0.84);
+          font-size: 15px;
+          line-height: 1.75;
+          max-width: 500px;
+          margin-bottom: 22px;
+        }
+
+        .hero-rating {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          padding: 6px 12px 6px 6px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(8px);
+          max-width: 100%;
+        }
+
+        .hero-rating-users {
+          display: flex;
+          align-items: center;
+          flex-shrink: 0;
+        }
+
+        .hero-rating-users img {
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid rgba(255, 255, 255, 0.85);
+          margin-left: -10px;
+        }
+
+        .hero-rating-users img:first-child {
+          margin-left: 0;
+        }
+
+        .hero-rating-content h6 {
+          margin: 0;
+          color: #fff;
+          font-size: 14px;
+          font-weight: 700;
+        }
+
+        .hero-rating-content p {
+          margin: 2px 0 0;
+          color: rgba(255, 255, 255, 0.76);
+          font-size: 11px;
+          line-height: 1.35;
+        }
+
+        .consult-card {
+          background: rgba(8, 34, 63, 0.84);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(12px);
+          border-radius: 26px;
+          padding: 24px;
+          width: 100%;
+          max-width: 390px;
+          margin-left: auto;
+          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16);
+        }
+
+        .consult-title {
+          color: #fff;
+          font-size: 25px;
+          font-weight: 800;
+          margin-bottom: 8px;
+        }
+
+        .consult-desc {
+          color: rgba(255, 255, 255, 0.75);
+          font-size: 13px;
+          line-height: 1.6;
+          margin-bottom: 18px;
+        }
+
+        .consult-card .form-control,
+        .consult-card .form-select {
+          border-radius: 15px;
+          min-height: 48px;
+          border: none;
+          box-shadow: none;
+          background: rgba(255, 255, 255, 0.97);
+          font-size: 14px;
+          padding: 12px 14px;
+          margin-bottom: 12px;
+        }
+
+        .consult-card textarea.form-control {
+          min-height: 94px;
+          resize: none;
+        }
+
+        .primary-btn {
+          background: linear-gradient(90deg, var(--bright-teal-blue), var(--turquoise-surf));
+          color: #ffffff;
+          font-weight: 800;
+          padding: 11px 28px;
+          min-height: 46px;
+          box-shadow: 0 12px 25px rgba(0, 180, 216, 0.25);
+          transition: 0.35s ease;
+        }
+
+        .primary-btn:hover {
+          transform: translateY(-2px);
+          background: linear-gradient(90deg, var(--turquoise-surf), var(--bright-teal-blue));
+          color: #ffffff;
+        }
+
+        .about-section {
+          padding: 78px 0 70px;
+          background: #f6f5f3;
+        }
+
+        .section-label {
+          color: var(--bright-teal-blue);
+          font-size: 10px;
+          letter-spacing: 3px;
+          font-weight: 700;
+          text-transform: uppercase;
+          margin-bottom: 14px;
+        }
+
+        .about-image-wrap {
+          position: relative;
+          min-height: 430px;
+          max-width: 430px;
+          margin-inline: auto;
+        }
+
+        .about-main-image {
+          width: 100%;
+          height: 390px;
+          object-fit: cover;
+          border-radius: 24px;
+        }
+
+        .about-small-image {
+          position: absolute;
+          left: -6px;
+          bottom: 18px;
+          width: 165px;
+          height: 170px;
+          object-fit: cover;
+          border-radius: 18px;
+          border: 6px solid #f6f5f3;
+          box-shadow: 0 12px 30px rgba(3, 4, 94, 0.12);
+        }
+
+        .about-heading {
+          color: #183c67;
+          font-size: clamp(30px, 4vw, 56px);
+          line-height: 1.12;
+          font-weight: 800;
+          max-width: 620px;
+          margin-bottom: 18px;
+        }
+
+        .about-text {
+          color: #6d7b8b;
+          font-size: 15px;
+          line-height: 1.8;
+          max-width: 560px;
+          margin-bottom: 28px;
+        }
+
+        .about-points {
+          display: grid;
+          gap: 24px;
+        }
+
+        .about-point {
+          display: flex;
+          align-items: flex-start;
+          gap: 14px;
+        }
+
+        .about-point-icon {
+          width: 34px;
+          height: 34px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: #214c6f;
+          font-size: 18px;
+          flex-shrink: 0;
+          margin-top: 2px;
+        }
+
+        .about-point h6 {
+          color: #214c6f;
+          font-size: 18px;
+          font-weight: 800;
+          margin: 0 0 6px;
+        }
+
+        .about-point p {
+          color: #6d7b8b;
+          font-size: 14px;
+          line-height: 1.75;
+          margin: 0;
+          max-width: 530px;
+        }
+
+        .features-section {
+          padding: 70px 0;
+        }
+
+        .feature-main-heading {
+          color: #183c67;
+          font-size: clamp(28px, 4vw, 58px);
+          line-height: 1.16;
+          font-weight: 800;
+          max-width: 760px;
+          margin: 0 auto 28px;
+        }
+
+        .features-shell {
+          background: #efefec;
+          border-radius: 28px;
+          padding: 16px;
+        }
+
+        .feature-row-box + .feature-row-box {
+          margin-top: 18px;
+        }
+
+        .feature-card {
+          background: #003b59;
+          border-radius: 24px;
+          min-height: 100%;
+          border: none;
+          overflow: hidden;
+        }
+
+        .feature-content-card,
+        .feature-content-card-right {
+          padding: 34px 30px 28px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+        }
+
+        .feature-grid-card {
+          padding: 26px 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .feature-number {
+          color: #ffffff;
+          font-size: 50px;
+          font-weight: 800;
+          line-height: 1;
+          margin-bottom: 14px;
+        }
+
+        .feature-title {
+          font-size: 26px;
+          line-height: 1.05;
+          font-weight: 800;
+          margin-bottom: 16px;
+        }
+
+        .feature-title .green {
+          color: var(--turquoise-surf);
+        }
+
+        .feature-title .white {
+          color: #ffffff;
+        }
+
+        .feature-text {
+          color: rgba(255, 255, 255, 0.86);
+          font-size: 13px;
+          line-height: 1.62;
+          max-width: 320px;
+          margin-bottom: 22px;
+        }
+
+        .feature-image {
+          width: 150px;
+          height: 110px;
+          object-fit: cover;
+          border-radius: 14px;
+          margin-top: auto;
+        }
+
+        .tile-grid-wrap {
+          width: 100%;
+          display: grid;
+          gap: 12px;
+          grid-template-columns: repeat(3, minmax(90px, 1fr));
+        }
+
+        .service-tile {
+          width: 100%;
+          min-height: 116px;
+          background: #f8f7f4;
+          border-radius: 16px;
+          padding: 11px 8px 8px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          text-align: center;
+          transition: transform 0.25s ease;
+        }
+
+        .service-tile:hover {
+          transform: translateY(-3px);
+        }
+
+        .service-tile-active {
+          background: var(--turquoise-surf);
+        }
+
+        .tile-icon-wrap {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(0, 180, 216, 0.18);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 10px;
+          flex-shrink: 0;
+        }
+
+        .service-tile-active .tile-icon-wrap {
+          background: #ffffff;
+        }
+
+        .tile-icon {
+          font-size: 15px;
+          color: #214b70;
+        }
+
+        .tile-text {
+          color: #214b70;
+          font-size: 11px;
+          line-height: 1.2;
+          font-weight: 700;
+          word-break: break-word;
+        }
+
+        .why-section {
+          padding: 25px 0 70px;
+        }
+
+        .why-grid {
+          align-items: center;
+        }
+
+        .why-photo,
+        .why-center-photo {
+          width: 100%;
+          object-fit: cover;
+          border-radius: 20px;
+        }
+
+        .why-photo {
+          height: 250px;
+        }
+
+        .why-center-photo {
+          height: 210px;
+        }
+
+        .why-feature-card {
+          background: linear-gradient(180deg, #04395a 0%, #083b5c 100%);
+          color: #fff;
+          border-radius: 26px;
+          padding: 26px;
+          box-shadow: 0 18px 45px rgba(3, 4, 94, 0.12);
+          transition: 0.35s ease;
+        }
+
+        .why-feature-card h5 {
+          font-size: 24px;
+          font-weight: 800;
+          margin-bottom: 14px;
+        }
+
+        .why-feature-card p,
+        .why-feature-card li {
+          color: rgba(255,255,255,.82);
+          line-height: 1.75;
+          font-size: 14px;
+        }
+
+        .section-heading {
+          color: var(--heading);
+          font-size: clamp(28px, 4vw, 48px);
+          line-height: 1.15;
+          font-weight: 800;
+        }
+
+        .why-mini h6 {
+          color: var(--heading);
+          font-weight: 800;
+          margin-bottom: 6px;
+        }
+
+        .why-mini p {
+          color: var(--muted-text);
+          margin: 0;
+          font-size: 14px;
+          line-height: 1.7;
+        }
+
+        .why-icon {
+          width: 46px;
+          height: 46px;
+          border-radius: 50%;
+          background: rgba(0, 180, 216, 0.15);
+          color: var(--bright-teal-blue);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+          flex-shrink: 0;
+        }
+
+        .check-list {
+          list-style: none;
+          padding: 0;
+          margin: 14px 0 0;
+        }
+
+        .check-list li {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 10px;
+        }
+
+        .review-section {
+          padding: 70px 0;
+          background:
+            radial-gradient(circle at top left, rgba(144,224,239,0.18), transparent 30%),
+            radial-gradient(circle at bottom right, rgba(0,180,216,0.10), transparent 30%),
+            #f7f7f4;
+        }
+
+        .review-heading {
+          color: var(--heading);
+          font-size: clamp(28px, 4vw, 60px);
+          line-height: 1.15;
+          font-weight: 800;
+          max-width: 900px;
+          margin: 0 auto 34px;
+          text-align: center;
+        }
+
+        .review-slider-wrap {
+          position: relative;
+        }
+
+        .review-nav {
+          position: absolute;
+          top: 92px;
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          border: none;
+          background: #fff;
+          color: var(--heading);
+          box-shadow: 0 10px 24px rgba(3, 4, 94, 0.12);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 3;
+          font-size: 26px;
+        }
+
+        .review-nav.prev {
+          left: -18px;
+        }
+
+        .review-nav.next {
+          right: -18px;
+        }
+
+        .review-card {
+          background: #f3f1ef;
+          border-radius: 18px;
+          padding: 18px 18px 16px;
+          height: 100%;
+          border: 1px solid rgba(3, 4, 94, 0.04);
+          box-shadow: 0 8px 20px rgba(3, 4, 94, 0.05);
+        }
+
+        .review-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 12px;
+        }
+
+        .review-stars {
+          display: flex;
+          align-items: center;
+          gap: 2px;
+          color: #f4b400;
+          font-size: 15px;
+          flex-wrap: wrap;
+        }
+
+        .verified-badge {
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background: #4285f4;
+          color: #fff;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 8px;
+          margin-left: 6px;
+        }
+
+        .google-badge {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background: conic-gradient(
+            #4285f4 0 25%,
+            #34a853 25% 50%,
+            #fbbc05 50% 75%,
+            #ea4335 75% 100%
+          );
+          position: relative;
+          flex-shrink: 0;
+        }
+
+        .google-badge::after {
+          content: "G";
+          position: absolute;
+          inset: 2px;
+          border-radius: 50%;
+          background: #fff;
+          color: #4285f4;
+          font-size: 13px;
+          font-weight: 800;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .review-text {
+          color: #1f1f1f;
+          font-size: 14px;
+          line-height: 1.5;
+          min-height: 96px;
+          margin-bottom: 10px;
+        }
+
+        .read-more-text {
+          color: #8c8c8c;
+          font-size: 14px;
+          font-weight: 500;
+          margin-bottom: 16px;
+        }
+
+        .review-footer {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .avatar-circle {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: var(--bright-teal-blue);
+          color: #fff;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          overflow: hidden;
+        }
+
+        .avatar-circle img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .review-meta h6 {
+          color: #171717;
+          font-weight: 700;
+          margin: 0;
+          font-size: 15px;
+        }
+
+        .review-meta span {
+          color: #7b7b7b;
+          font-size: 13px;
+        }
+
+        .process-section {
+          padding: 0 0 70px;
+        }
+
+        .process-banner {
+          background:
+            linear-gradient(90deg, rgba(3, 4, 94, .86), rgba(0, 119, 182, .68)),
+            url("https://images.unsplash.com/photo-1584516150909-c43483ee7935?auto=format&fit=crop&w=1400&q=80") center/cover;
+          border-radius: 28px;
+          padding: 42px 30px 28px;
+          overflow: hidden;
+          box-shadow: 0 22px 48px rgba(3,4,94,.18);
+        }
+
+        .process-title {
+          color: #fff;
+          font-size: clamp(28px, 3vw, 54px);
+          font-weight: 800;
+          line-height: 1.05;
+          max-width: 470px;
+        }
+
+        .process-desc {
+          color: rgba(255,255,255,.82);
+          max-width: 530px;
+          font-size: 14px;
+          line-height: 1.75;
+          margin-top: 14px;
+          margin-bottom: 30px;
+        }
+
+        .process-card {
+          background: rgba(255,255,255,.98);
+          border-radius: 22px;
+          padding: 24px 18px;
+          min-height: 100%;
+          box-shadow: 0 14px 30px rgba(0,0,0,.1);
+        }
+
+        .process-no {
+          color: var(--turquoise-surf);
+          font-size: 26px;
+          font-weight: 800;
+          margin-bottom: 12px;
+        }
+
+        .process-card h6 {
+          color: var(--heading);
+          font-size: 17px;
+          font-weight: 800;
+          margin-bottom: 8px;
+        }
+
+        .process-card p {
+          color: var(--muted-text);
+          font-size: 13px;
+          line-height: 1.75;
+          margin: 0;
+        }
+
+        .cta-section {
+          background: #f5f7f9;
+          padding: 80px 0 0;
+        }
+
+        .cta-box {
+          max-width: 900px;
+          margin: auto;
+        }
+
+        .cta-label {
+          color: var(--bright-teal-blue);
+          font-size: 14px;
+          letter-spacing: 4px;
+          font-weight: 600;
+          margin-bottom: 15px;
+        }
+
+        .cta-heading {
+          color: #214c6f;
+          font-size: clamp(28px, 4vw, 48px);
+          font-weight: 700;
+          line-height: 1.2;
+        }
+
+        .cta-btn {
+          background: var(--bright-teal-blue);
+          border: none;
+          padding: 14px 32px;
+          border-radius: 40px;
+          font-weight: 600;
+          color: white;
+          font-size: 16px;
+        }
+
+        .cta-btn:hover {
+          background: var(--turquoise-surf);
+          color: white;
+        }
+
+        .cta-doctors {
+          margin-top: 40px;
+        }
+
+        .cta-doctors img {
+          width: 100%;
+          max-width: 900px;
+          height: auto;
+          margin: 0 auto;
+        }
+
+        @keyframes floatBlob {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(-24px) scale(1.06); }
+        }
+
+        @media (max-width: 991.98px) {
+          .home-page {
+            padding-top: 85px;
+          }
+
+          .hero-inner {
+            min-height: auto;
+            padding: 55px 0 45px;
+          }
+
+          .hero-title {
+            max-width: 100%;
+            font-size: 42px;
+          }
+
+          .hero-desc {
+            max-width: 100%;
+          }
+
+          .consult-card {
+            display: none !important;
+          }
+
+          .about-section,
+          .features-section,
+          .review-section,
+          .why-section {
+            padding: 55px 0;
+          }
+
+          .process-section {
+            padding: 0 0 55px;
+          }
+
+          .about-image-wrap {
+            max-width: 100%;
+            min-height: 360px;
+          }
+
+          .about-main-image {
+            height: 340px;
+          }
+
+          .about-small-image {
+            width: 145px;
+            height: 145px;
+            left: 10px;
+            bottom: -5px;
+          }
+
+          .features-shell {
+            padding: 14px;
+          }
+
+          .feature-content-card,
+          .feature-content-card-right,
+          .feature-grid-card {
+            padding: 24px 20px;
+          }
+
+          .feature-image {
+            width: 170px;
+            height: 120px;
+          }
+
+          .tile-grid-wrap {
+            grid-template-columns: repeat(3, minmax(88px, 1fr));
+          }
+
+          .review-nav {
+            display: none;
+          }
+
+          .why-photo,
+          .why-center-photo {
+            height: 240px;
+          }
+        }
+
+        @media (max-width: 767.98px) {
+          .home-page {
+            padding-top: 72px;
+          }
+
+          .home-page::before,
+          .home-page::after {
+            width: 180px;
+            height: 180px;
+          }
+
+          .hero-box {
+            border-radius: 0 0 20px 20px;
+          }
+
+          .hero-inner {
+            min-height: auto;
+            padding: 38px 0 30px;
+          }
+
+          .mini-kicker {
+            font-size: 9px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+          }
+
+          .hero-title {
+            font-size: 28px;
+            line-height: 1.15;
+            max-width: 100%;
+            margin-bottom: 12px;
+          }
+
+          .hero-desc {
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 100%;
+          }
+
+          .hero-rating {
+            width: 100%;
+            padding: 8px 10px;
+            gap: 10px;
+          }
+
+          .hero-rating-users img {
+            width: 34px;
+            height: 34px;
+          }
+
+          .hero-rating-content h6 {
+            font-size: 13px;
+          }
+
+          .hero-rating-content p {
+            font-size: 10px;
+          }
+
+          .about-section,
+          .features-section,
+          .review-section,
+          .why-section {
+            padding: 45px 0;
+          }
+
+          .process-section {
+            padding: 0 0 45px;
+          }
+
+          .about-image-wrap {
+            min-height: 290px;
+          }
+
+          .about-main-image {
+            height: 270px;
+            border-radius: 18px;
+          }
+
+          .about-small-image {
+            width: 110px;
+            height: 110px;
+            border-radius: 14px;
+            border-width: 4px;
+            left: 8px;
+            bottom: -6px;
+          }
+
+          .about-heading,
+          .feature-main-heading,
+          .review-heading,
+          .section-heading,
+          .process-title,
+          .cta-heading {
+            font-size: 28px;
+            line-height: 1.2;
+          }
+
+          .about-text,
+          .about-point p,
+          .why-mini p,
+          .process-desc,
+          .process-card p,
+          .review-text {
+            font-size: 13px;
+          }
+
+          .features-shell {
+            border-radius: 22px;
+            padding: 12px;
+          }
+
+          .feature-row-box + .feature-row-box {
+            margin-top: 12px;
+          }
+
+          .feature-card {
+            border-radius: 20px;
+          }
+
+          .feature-content-card,
+          .feature-content-card-right,
+          .feature-grid-card {
+            padding: 18px 14px;
+          }
+
+          .feature-number {
+            font-size: 28px;
+            margin-bottom: 10px;
+          }
+
+          .feature-title {
+            font-size: 22px;
+            margin-bottom: 12px;
+          }
+
+          .feature-text {
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 14px;
+            max-width: 100%;
+          }
+
+          .feature-image {
+            width: 120px;
+            height: 90px;
+            border-radius: 12px;
+          }
+
+          .tile-grid-wrap {
+            grid-template-columns: repeat(2, minmax(120px, 1fr));
+            gap: 10px;
+          }
+
+          .service-tile {
+            min-height: 104px;
+            border-radius: 14px;
+            padding: 10px 6px 8px;
+          }
+
+          .tile-icon-wrap {
+            width: 34px;
+            height: 34px;
+            margin-bottom: 8px;
+          }
+
+          .tile-icon {
+            font-size: 14px;
+          }
+
+          .tile-text {
+            font-size: 10px;
+            line-height: 1.15;
+          }
+
+          .why-photo,
+          .why-center-photo {
+            height: 220px;
+            border-radius: 18px;
+          }
+
+          .why-feature-card {
+            padding: 20px;
+            border-radius: 20px;
+          }
+
+          .why-feature-card h5 {
+            font-size: 20px;
+          }
+
+          .review-card {
+            padding: 16px 16px 14px;
+          }
+
+          .read-more-text {
+            font-size: 13px;
+          }
+
+          .process-banner {
+            border-radius: 22px;
+            padding: 26px 16px 18px;
+          }
+
+          .process-card {
+            border-radius: 18px;
+            padding: 18px 14px;
+          }
+
+          .cta-section {
+            padding: 50px 0 0;
+          }
+
+          .cta-label {
+            font-size: 12px;
+            letter-spacing: 3px;
+          }
+
+          .cta-btn,
+          .primary-btn {
+            width: 100%;
+          }
+
+          .cta-doctors {
+            margin-top: 24px;
+          }
+
+          .cta-doctors img {
+            max-width: 100%;
+          }
+        }
+
+        @media (max-width: 575.98px) {
+          .home-page {
+            padding-top: 66px;
+          }
+
+          .hero-inner {
+            padding: 32px 0 24px;
+          }
+
+          .hero-title {
+            font-size: 24px;
+          }
+
+          .hero-desc {
+            font-size: 12.5px;
+          }
+
+          .tile-grid-wrap {
+            grid-template-columns: repeat(2, 1fr);
+          }
+
+          .service-tile {
+            min-height: 98px;
+          }
+
+          .about-point {
+            gap: 10px;
+          }
+
+          .why-icon {
+            width: 42px;
+            height: 42px;
+            font-size: 16px;
+          }
+        }
+      `}</style>
+
+      <div className="home-page">
+        <section className="hero-section site-section">
+          <Container fluid className="px-0">
+            <div className="hero-box">
+              <Container>
+                <div className="hero-inner">
+                  <Row className="align-items-center g-4">
+                    <Col lg={7}>
+                      <div className="mini-kicker">WELCOME TO PASSTELA CARE</div>
+
+                      <h1 className="hero-title">
+                        Best <span className="accent">Healthcare</span> Services <br />
+                        At Home
+                      </h1>
+
+                      <p className="hero-desc">
+                        We provide best healthcare services at home in Ahmedabad designed
+                        to ensure comfort, safety, and personalized support for your
+                        loved ones.
+                      </p>
+
+                      {heroStats.map((item, index) => (
+                        <div className="hero-rating" key={index}>
+                          <div className="hero-rating-users">
+                            <img src={item.image} alt={item.title} />
+                            <img
+                              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80"
+                              alt="Client"
+                            />
+                          </div>
+
+                          <div className="hero-rating-content">
+                            <h6>{item.title}</h6>
+                            <p>Caring hand, trusted homecare always</p>
+                          </div>
                         </div>
-                      </div>
-                      <div className="hp-iconCircle hp-float">
-                        <i className="bi bi-headset" />
-                      </div>
-                    </div>
+                      ))}
+                    </Col>
 
-                    <div className="row g-2 mt-3">
-                      <div className="col-12 col-sm-6">
-                        <a href="#services" className="hp-miniCard">
-                          <i className="bi bi-grid-1x2-fill me-2" />
-                          Services
-                        </a>
-                      </div>
-                      <div className="col-12 col-sm-6">
-                        <a href="#cta" className="hp-miniCard">
-                          <i className="bi bi-chat-dots-fill me-2" />
-                          Support
-                        </a>
-                      </div>
-                      <div className="col-12 col-sm-6">
-                        <a href="#portfolio" className="hp-miniCard">
-                          <i className="bi bi-images me-2" />
-                          Portfolio
-                        </a>
-                      </div>
-                      <div className="col-12 col-sm-6">
-                        <a href="#partners" className="hp-miniCard">
-                          <i className="bi bi-patch-check-fill me-2" />
-                          Partners
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="hp-callRow mt-3">
-                      <div className="hp-callChip">
-                        <i className="bi bi-shield-check me-2" />
-                        Verified Support
-                      </div>
-                      <a className="hp-phone" href="tel:5552784364">
-                        <i className="bi bi-telephone-outbound me-2" />
-                        555-278-4364
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom cards */}
-            <div className="hp-heroBottom hp-reveal hp-delay2">
-              <div className="row g-3">
-                <div className="col-12 col-md-7">
-                  <div className="hp-card p-4 h-100">
-                    <div className="d-flex align-items-start justify-content-between gap-3">
-                      <div>
-                        <h3 className="hp-cardTitle mb-2">Emergency Cases</h3>
-                        <p className="hp-cardText mb-0">
-                          Personalized attention and continuous support for every patient.
+                    <Col lg={5} className="d-none d-lg-block">
+                      <div className="consult-card">
+                        <h3 className="consult-title">Book A Free Consultation</h3>
+                        <p className="consult-desc">
+                          Get expert homecare guidance through our personalized
+                          consultation form.
                         </p>
-                      </div>
-                      <div className="hp-iconCircle hp-bounce">
-                        <i className="bi bi-telephone-fill" />
-                      </div>
-                    </div>
 
-                    <div className="d-flex align-items-center gap-3 mt-3 flex-wrap">
-                      <div className="hp-callChip">
-                        <i className="bi bi-headset me-2" />
-                        24/7 Online
+                       
                       </div>
-                      <a className="hp-phone2" href="tel:5552784364">
-                        <i className="bi bi-telephone-outbound me-2" />
-                        555-278-4364
-                      </a>
-                    </div>
-                  </div>
+                    </Col>
+                  </Row>
                 </div>
-
-                <div className="col-12 col-md-5">
-                  <div className="hp-card p-4 h-100">
-                    <div className="d-flex align-items-start justify-content-between gap-3">
-                      <div>
-                        <h3 className="hp-cardTitle mb-2">Doctor Timetable</h3>
-                        <p className="hp-cardText mb-0">Check availability and book faster.</p>
-                      </div>
-                      <div className="hp-iconCircle hp-float">
-                        <i className="bi bi-calendar-week-fill" />
-                      </div>
-                    </div>
-
-                    <a href="#cta" className="btn btn-primary hp-btn mt-3 w-100">
-                      Book / Support <span className="ms-1">+</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
+              </Container>
             </div>
-          </div>
+          </Container>
         </section>
 
-        {/* ================= ABOUT ================= */}
-          <div className="container-fluid">
-        <section className="hp-section hp-about " id="about">
-            <div className="row align-items-center g-4">
-              <div className="col-12 col-lg-6">
-                <div className="hp-aboutWrap hp-reveal">
-                  <div className="row g-3">
-                    <div className="col-12 col-sm-6">
-                      <div className="hp-aboutCard">
-                        <img {...safeImg(aboutDoc1)} alt="Doctor" className="img-fluid" />
-                      </div>
-                    </div>
-                    <div className="col-12 col-sm-6">
-                      <div className="hp-aboutCard hp-aboutCardAlt">
-                        <img {...safeImg(aboutDoc2)} alt="Clinic" className="img-fluid" />
-                      </div>
-                    </div>
-                  </div>
+        <section className="about-section site-section">
+          <Container>
+            <Row className="align-items-center g-lg-5 g-4">
+              <Col lg={5}>
+                <div className="about-image-wrap">
+                  <img
+                    className="about-main-image"
+                    src="https://passtelacare.com/wp-content/uploads/elementor/thumbs/steptodown.com850211-rafwor7j4bywibnjfn43k09o95friej2pm49eukq4g.jpg"
+                    alt="Doctor support"
+                  />
 
-                  <div className="hp-aboutStat mt-3">
-                    <div className="d-flex align-items-end justify-content-between gap-3 flex-wrap">
-                      <div>
-                        <div className="hp-statNum">
-                          <span className="hp-gradText">23k+</span>
-                        </div>
-                        <div className="hp-statText">Patients cared with compassion</div>
-                      </div>
-                      <div className="hp-aboutBadge">
-                        <i className="bi bi-award-fill me-2" />
-                        Trusted Care
-                      </div>
-                    </div>
-
-                    <p className="hp-muted mt-2 mb-0">
-                      We focus on empathy, trust, and long-term relationships — not just treatment.
-                    </p>
-                  </div>
+                  <img
+                    className="about-small-image"
+                    src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=700&q=80"
+                    alt="Healthcare discussion"
+                  />
                 </div>
-              </div>
+              </Col>
 
-              <div className="col-12 col-lg-6">
-                <div className="hp-reveal">
-                  <span className="hp-outlinePill">
-                    <i className="bi bi-info-circle-fill me-2" />
-                    About Us
-                  </span>
+              <Col lg={7}>
+                <SectionLabel text="ABOUT US" center={false} />
 
-                  <h2 className="hp-h2 mt-3">Guided by Heart and Hope</h2>
-                  <p className="hp-muted mt-3">
-                    Medicine is more than science — it’s hope, care, and commitment. We help you feel
-                    safe, heard, and supported at every step.
-                  </p>
+                <h2 className="about-heading">
+                  Compassionate Homecare & Private Nursing Services For Your Loved Ones
+                </h2>
 
-                  <div className="row g-3 mt-3">
-                    {[
-                      { t: "Expert Doctors", i: "bi-person-badge-fill" },
-                      { t: "Modern Diagnostics", i: "bi-capsule-pill" },
-                      { t: "Personalized Care", i: "bi-hand-heart-fill" },
-                      { t: "Fast Support", i: "bi-lightning-charge-fill" },
-                    ].map((x, i) => (
-                      <div className="col-12 col-sm-6" key={i}>
-                        <div className="hp-miniFeature">
-                          <div className="hp-miniFeatureIcon">
-                            <i className={`bi ${x.i}`} />
-                          </div>
-                          <div className="fw-bold" style={{ color: "var(--deep-twilight)" }}>
-                            {x.t}
-                          </div>
-                          <div className="hp-muted" style={{ fontSize: 13, fontWeight: 800 }}>
-                            Reliable and patient-focused service.
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="d-flex flex-column flex-sm-row gap-3 mt-4">
-                    <a href="#services" className="btn btn-primary hp-btn">
-                      Explore Services <span className="ms-1">+</span>
-                    </a>
-                    <a href="#cta" className="btn btn-outline-primary hp-btn hp-btnOutline2">
-                      Support / Booking
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </section>
-          </div>
-
-        {/* ================= SERVICES ================= */}
-        <section className="hp-section hp-soft" id="services">
-          <div className="container">
-            <div className="text-center mb-4 hp-reveal">
-              <span className="hp-outlinePill">
-                <i className="bi bi-grid-1x2-fill me-2" />
-                Our Services
-              </span>
-              <h2 className="hp-h2 mt-3">Dedicated to Your Wellness</h2>
-              <div className="hp-quote mt-2">"Trusted Hands, Caring Hearts"</div>
-            </div>
-
-            <div className="row g-4">
-              {services.map((s, idx) => (
-                <div className="col-12 col-sm-6 col-lg-4 hp-reveal" key={idx}>
-                  <div className="hp-serviceCard p-4 h-100">
-                    <div className={`hp-serviceIcon ${s.bg}`}>
-                      <i className={`bi ${s.icon}`} />
-                    </div>
-                    <h5 className="mt-3 mb-2 fw-bold">{s.title}</h5>
-                    <p className="hp-muted mb-3">{s.text}</p>
-
-                    <div className="d-flex align-items-center justify-content-between">
-                      <a className="hp-link" href="#cta">
-                        <i className="bi bi-arrow-right-circle me-1" />
-                        Get Help
-                      </a>
-                      <div className="hp-miniAction">
-                        <i className="bi bi-lightning-charge-fill me-1" />
-                        Quick
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ================= CTA ================= */}
-        <section className="hp-section hp-soft hp-ctaBanner" id="cta">
-          <div className="container">
-            <div className="row g-4 align-items-center">
-              <div className="col-12 col-lg-6 hp-reveal">
-                <span className="hp-outlinePill">
-                  <i className="bi bi-chat-dots-fill me-2" />
-                  Need Help?
-                </span>
-
-                <h2 className="hp-h2 mt-3">Talk to Our Support Team</h2>
-
-                <p className="hp-muted mt-2 mb-4" style={{ maxWidth: 520 }}>
-                  Get quick assistance, consultation guidance, and booking support. We respond fast
-                  and keep everything simple for you.
+                <p className="about-text">
+                  Our mission is to ensure your loved ones receive professional medical
+                  support and compassionate care right at home, without the stress of
+                  frequent hospital visits.
                 </p>
 
-                <div className="d-flex flex-column flex-sm-row gap-3">
-                  <a href="mailto:support@yourclinic.com" className="btn btn-primary hp-btn">
-                    <i className="bi bi-envelope-paper-heart-fill me-2" />
-                    Email Support
-                  </a>
+                <div className="about-points">
+                  {trustPoints.map((item, index) => {
+                    const Icon = item.icon;
+                    return (
+                      <div className="about-point" key={index}>
+                        <div className="about-point-icon">
+                          <Icon />
+                        </div>
 
-                  <a href="tel:5552784364" className="btn btn-outline-primary hp-btn hp-btnOutline2">
-                    <i className="bi bi-telephone-outbound me-2" />
-                    Call Now
-                  </a>
-                </div>
-
-                <div className="hp-formHint mt-3">
-                  <i className="bi bi-shield-check me-2" />
-                  Your details are safe • Quick response within minutes
-                </div>
-              </div>
-
-              <div className="col-12 col-lg-6 hp-reveal">
-                <div className="hp-ctaImgWrap">
-                  <img {...safeImg(ctaImg)} alt="Support" className="hp-ctaImg" />
-                  <div className="hp-ctaBadge">
-                    <div className="hp-ctaBadgeIcon">
-                      <i className="bi bi-headset" />
-                    </div>
-                    <div className="ms-2">
-                      <div className="fw-bold text-white">24/7 Support</div>
-                      <div className="text-white-50" style={{ fontWeight: 800, fontSize: 12 }}>
-                        Chat • Call • Email
+                        <div>
+                          <h6>{item.title}</h6>
+                          <p>{item.desc}</p>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="hp-ctaTag">
-                    <i className="bi bi-lightning-charge-fill me-2" />
-                    Fast Response
-                  </div>
+                    );
+                  })}
                 </div>
-              </div>
-            </div>
-          </div>
+
+                <div className="mt-4 pt-1">
+                  <PrimaryButton>Learn More</PrimaryButton>
+                </div>
+              </Col>
+            </Row>
+          </Container>
         </section>
 
-        {/* ================= HOW WE WORK (PERFECT ✅) ================= */}
-        <section className="hp-section hp-how">
-          <div className="container">
-            <div className="text-center mb-4 hp-reveal">
-              <span className="hp-outlinePill">
-                <i className="bi bi-diagram-3-fill me-2" />
-                How We Work
-              </span>
-              <h2 className="hp-h2 mt-3">Simple Steps, Better Care</h2>
-              <p className="hp-muted mt-2" style={{ maxWidth: 760, margin: "0 auto" }}>
-                Clean process with clear communication — so you always know what happens next.
-              </p>
-            </div>
+        <section className="features-section site-section">
+          <Container>
+            <SectionLabel text="Features" />
+            <h2 className="feature-main-heading text-center">
+              Begin Your Health Journey With <br />
+              Passtela Care
+            </h2>
 
-            <div className="row g-4 align-items-stretch">
-              {/* Left: Step Cards */}
-              <div className="col-12 col-lg-7">
-                <div className="row g-4">
-                  {steps.map((x) => (
-                    <div className="col-12 col-sm-6 hp-reveal" key={x.n}>
-                      <div className="hp-workCard h-100">
-                        <div className="hp-workTop">
-                          <div className="hp-workNum">{x.n}</div>
-                          <div className="hp-workIcon">
-                            <i className={`bi ${x.icon}`} />
-                          </div>
-                        </div>
-                        <div className="hp-workTitle">{x.t}</div>
-                        <div className="hp-muted" style={{ fontWeight: 800 }}>
-                          {x.d}
-                        </div>
-                        <div className="hp-workLine" />
-                        <a href="#cta" className="hp-workLink">
-                          Get Support <i className="bi bi-arrow-right ms-1" />
-                        </a>
+            <div className="features-shell">
+              <div className="feature-row-box">
+                <Row className="g-4 align-items-stretch">
+                  <Col lg={6}>
+                    <Card className="feature-card feature-content-card border-0">
+                      <div className="feature-number">01.</div>
+
+                      <div className="feature-title">
+                        <span className="green">Care</span>{" "}
+                        <span className="white">Services</span>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
-              {/* Right: Feature Card */}
-              <div className="col-12 col-lg-5 hp-reveal">
-                <div className="hp-workSide h-100">
-                  <div className="hp-workSideTop">
-                    <div>
-                      <div className="hp-workPct">99%</div>
-                      <div className="hp-workSub">Satisfaction Rate*</div>
-                    </div>
-                    <div className="hp-sideChip">
-                      <i className="bi bi-patch-check-fill me-2" />
-                      Verified
-                    </div>
-                  </div>
+                      <p className="feature-text">
+                        We leverage cutting-edge technology to enhance our home healthcare
+                        services. Our technology-enabled approach allows us to provide
+                        efficient, effective, and personalized care to each of our patients.
+                      </p>
 
-                  <div className="hp-workFoot">*Trusted by 1.2k Patients on Google</div>
-
-                  <div className="hp-workImgWrap">
-                    <img {...safeImg(workImg)} alt="Doctors" className="hp-workImg" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ================= TESTIMONIALS ================= */}
-        <section className="hp-section">
-          <div className="container">
-            <div className="row g-4 align-items-stretch">
-              <div className="col-12 col-lg-4 hp-reveal">
-                <span className="hp-outlinePill">
-                  <i className="bi bi-chat-quote-fill me-2" />
-                  Testimonials
-                </span>
-                <h2 className="hp-h2 mt-3">Trusted by Patients</h2>
-                <p className="hp-muted mt-2">
-                  Real stories of care, recovery, and trust — reflecting our dedication.
-                </p>
-                <a href="#cta" className="btn btn-primary hp-btn mt-3 w-100 w-lg-auto">
-                  <i className="bi bi-headset me-2" />
-                  Get Support <span className="ms-1">+</span>
-                </a>
-              </div>
-
-              <div className="col-12 col-lg-8 hp-reveal">
-                <div
-                  id="hpReviewCarousel"
-                  className="carousel slide hp-carousel"
-                  data-bs-ride="carousel"
-                  data-bs-interval="3500"
-                >
-                  <div className="carousel-inner">
-                    {testimonials.map((t, idx) => (
-                      <div className={`carousel-item ${idx === 0 ? "active" : ""}`} key={idx}>
-                        <div className="hp-testCard p-4 p-md-5">
-                          <div className="d-flex align-items-center justify-content-between gap-3">
-                            <div className="hp-quoteMark">“</div>
-                            <div className="hp-stars">
-                              {Array.from({ length: t.stars }).map((_, i) => (
-                                <i className="bi bi-star-fill" key={i} />
-                              ))}
-                            </div>
-                          </div>
-
-                          <div className="hp-testText mt-2">{t.q}</div>
-
-                          <div className="d-flex align-items-center gap-3 mt-4">
-                            <div className="hp-avatar" />
-                            <div>
-                              <div className="fw-bold">{t.n}</div>
-                              <div className="hp-linkSmall">{t.r}</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <button
-                    className="carousel-control-prev hp-carBtn"
-                    type="button"
-                    data-bs-target="#hpReviewCarousel"
-                    data-bs-slide="prev"
-                    aria-label="Previous"
-                  >
-                    <span className="hp-carIcon">
-                      <i className="bi bi-arrow-left" />
-                    </span>
-                  </button>
-                  <button
-                    className="carousel-control-next hp-carBtn"
-                    type="button"
-                    data-bs-target="#hpReviewCarousel"
-                    data-bs-slide="next"
-                    aria-label="Next"
-                  >
-                    <span className="hp-carIcon">
-                      <i className="bi bi-arrow-right" />
-                    </span>
-                  </button>
-
-                  <div className="carousel-indicators hp-indicators">
-                    {testimonials.map((_, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        data-bs-target="#hpReviewCarousel"
-                        data-bs-slide-to={i}
-                        className={i === 0 ? "active" : ""}
-                        aria-label={`Slide ${i + 1}`}
+                      <img
+                        className="feature-image"
+                        src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=900&q=80"
+                        alt="Care services"
                       />
-                    ))}
-                  </div>
-                </div>
+                    </Card>
+                  </Col>
+
+                  <Col lg={6}>
+                    <Card className="feature-card feature-grid-card border-0">
+                      <div className="tile-grid-wrap">
+                        {careServices.map((item, index) => (
+                          <ServiceTile key={index} item={item} />
+                        ))}
+                      </div>
+                    </Card>
+                  </Col>
+                </Row>
+              </div>
+
+              <div className="feature-row-box second-row">
+                <Row className="g-4 align-items-stretch">
+                  <Col lg={6} className="order-2 order-lg-1">
+                    <Card className="feature-card feature-grid-card border-0">
+                      <div className="tile-grid-wrap">
+                        {medicalServices.map((item, index) => (
+                          <ServiceTile key={index} item={item} />
+                        ))}
+                      </div>
+                    </Card>
+                  </Col>
+
+                  <Col lg={6} className="order-1 order-lg-2">
+                    <Card className="feature-card feature-content-card feature-content-card-right border-0">
+                      <div className="feature-number">02.</div>
+
+                      <div className="feature-title">
+                        <span className="green">Medical</span>
+                        <br />
+                        <span className="white">Services</span>
+                      </div>
+
+                      <p className="feature-text">
+                        Experience the convenience and peace of mind that comes with We
+                        Passtelacare's transformative approach to home healthcare. Let us
+                        redefine how you receive care – ensuring comfort, safety, and
+                        improved outcomes in the comfort of your own home.
+                      </p>
+
+                      <img
+                        className="feature-image"
+                        src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=80"
+                        alt="Medical services"
+                      />
+                    </Card>
+                  </Col>
+                </Row>
               </div>
             </div>
-          </div>
+          </Container>
         </section>
 
-        {/* ================= PORTFOLIO ================= */}
-        <section className="hp-section hp-soft" id="portfolio">
-          <div className="container">
-            <div className="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-start hp-reveal">
-              <div>
-                <span className="hp-outlinePill">
-                  <i className="bi bi-images me-2" />
-                  Our Portfolio
-                </span>
-                <h2 className="hp-h2 mt-3">Clean, Modern Facilities</h2>
-              </div>
-              <p className="hp-muted mt-lg-5 mb-0" style={{ maxWidth: 520 }}>
-                Modern medical infrastructure with a human touch — designed for comfort and trust.
-              </p>
-            </div>
+        <section className="why-section site-section">
+          <Container>
+            <Row className="g-4 why-grid">
+              <Col lg={4}>
+                <img
+                  className="why-photo"
+                  src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=900&q=80"
+                  alt="Senior care"
+                />
+              </Col>
 
-            <div className="row g-4 mt-3">
-              {[
-                { img: port1, title: "Advanced Diagnostic Center" },
-                { img: port2, title: "Modern Surgical Facilities" },
-                { img: port3, title: "Pediatric Wellness Care" },
-              ].map((p, idx) => (
-                <div className="col-12 col-sm-6 col-lg-4 hp-reveal" key={idx}>
-                  <div className="hp-portCard">
-                    <img {...safeImg(p.img)} alt={p.title} className="hp-portImg" />
-                    <div className="hp-portOverlay" />
-                    <div className="hp-portContent">
-                      <div className="hp-plus">+</div>
-                      <div className="hp-portTitle">{p.title}</div>
-                      <a href="#cta" className="btn btn-dark hp-portBtn">
-                        <i className="bi bi-arrow-right-circle me-2" />
-                        Get Support
-                      </a>
+              <Col lg={4}>
+                <SectionLabel text="Why Choose Us" center={false} />
+                <h2 className="section-heading">
+                  A Community Where Seniors Thrive, Not Just Survive
+                </h2>
+
+                <div className="mt-4">
+                  <PrimaryButton>Get Started</PrimaryButton>
+                </div>
+
+                <div className="mt-4 d-grid gap-4">
+                  {whyChoose.map((item, index) => {
+                    const Icon = item.icon;
+                    return (
+                      <div className="why-mini" key={index}>
+                        <div className="d-flex gap-3 align-items-start">
+                          <div className="why-icon">
+                            <Icon />
+                          </div>
+                          <div>
+                            <h6>{item.title}</h6>
+                            <p>{item.desc}</p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Col>
+
+              <Col lg={4}>
+                <Row className="g-4">
+                  <Col xs={12}>
+                    <img
+                      className="why-center-photo"
+                      src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?auto=format&fit=crop&w=900&q=80"
+                      alt="Family discussion"
+                    />
+                  </Col>
+                  <Col xs={12}>
+                    <div className="why-feature-card">
+                      <h5>Our Featured Benefits</h5>
+                      <p>
+                        We focus on dependable home healthcare that combines professional
+                        skill, patient comfort and modern care planning.
+                      </p>
+                      <ul className="check-list">
+                        <li>
+                          <FaCheckCircle /> Flexible and compassionate care plans
+                        </li>
+                        <li>
+                          <FaCheckCircle /> Skilled professionals at your service
+                        </li>
+                      </ul>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Container>
         </section>
 
-        {/* ================= PARTNERS ================= */}
-        <section className="py-4 hp-soft" id="partners">
-          <div className="container">
-            <div className="text-center hp-reveal">
-              <span className="hp-outlinePill">
-                <i className="bi bi-patch-check-fill me-2" />
-                Our Partners
-              </span>
-              <h2 className="hp-h2 mt-3" style={{ fontSize: "clamp(22px, 2.8vw, 42px)" }}>
-                Trusted Healthcare Network
+        <section className="review-section">
+          <Container>
+            <SectionLabel text="Testimonials" />
+            <h2 className="review-heading">
+              Begin Your Health Journey With Passtela Medical Emergency Care
+            </h2>
+
+            <div className="review-slider-wrap">
+              <button className="review-nav prev" aria-label="Previous reviews">
+                ‹
+              </button>
+              <button className="review-nav next" aria-label="Next reviews">
+                ›
+              </button>
+
+              <Row className="g-4">
+                {testimonials.map((item, index) => (
+                  <Col lg={4} md={6} key={index}>
+                    <div className="review-card">
+                      <div className="review-top">
+                        <div className="review-stars">
+                          {[...Array(5)].map((_, i) => (
+                            <FaStar key={i} />
+                          ))}
+                          <span className="verified-badge">
+                            <FaCheckCircle />
+                          </span>
+                        </div>
+                        <div className="google-badge" />
+                      </div>
+
+                      <div className="review-text">{item.text}</div>
+                      <div className="read-more-text">Read more</div>
+
+                      <div className="review-footer">
+                        <div className="avatar-circle">
+                          {item.avatarImage ? (
+                            <img src={item.avatarImage} alt={item.name} />
+                          ) : (
+                            item.name.charAt(0)
+                          )}
+                        </div>
+
+                        <div className="review-meta">
+                          <h6>{item.name}</h6>
+                          <span>{item.role}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </Container>
+        </section>
+
+        <section className="process-section site-section">
+          <Container>
+            <div className="process-banner">
+              <SectionLabel text="How It Works" center={false} />
+              <h2 className="process-title">How Our Healthcare Services Process Works</h2>
+              <p className="process-desc">
+                At Passtela Care, our step-by-step care process ensures a smooth and
+                patient-first healthcare experience from consultation to service delivery.
+              </p>
+
+              <Row className="g-4">
+                {processSteps.map((item, index) => (
+                  <Col md={6} lg={3} key={index}>
+                    <div className="process-card">
+                      <div className="process-no">{item.no}</div>
+                      <h6>{item.title}</h6>
+                      <p>{item.desc}</p>
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </Container>
+        </section>
+
+        <section className="cta-section site-section">
+          <Container>
+            <div className="cta-box text-center">
+              <p className="cta-label">JOIN US TODAY</p>
+
+              <h2 className="cta-heading">
+                Schedule A Personalized Tour <br />
+                Or Care Consultation
               </h2>
-              <p className="hp-muted mt-2" style={{ maxWidth: 720, margin: "0 auto" }}>
-                Partners that help us deliver quality care across hospitals, labs, clinics, and
-                pharmacies.
-              </p>
-            </div>
 
-            <div className="row g-3 g-md-4 mt-2 justify-content-center">
-              {partners.map((x, i) => (
-                <div className="col-12 col-sm-6 col-lg-4 col-xl-2 hp-reveal" key={i}>
-                  <div className="hp-partnerCard">
-                    <div className="hp-partnerIcon">
-                      <i className={`bi ${x.icon}`} />
-                    </div>
-                    <div className="mt-2 fw-bold" style={{ color: "var(--deep-twilight)" }}>
-                      {x.name}
-                    </div>
-                    <div className="hp-muted" style={{ fontSize: 12, fontWeight: 800 }}>
-                      {x.tag}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="hp-reveal mt-4">
-              <div className="hp-footerStrip">
-                <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
-                  <div>
-                    <div className="fw-bold" style={{ color: "var(--deep-twilight)", fontSize: 18 }}>
-                      Need support or booking help?
-                    </div>
-                    <div className="hp-muted" style={{ fontWeight: 800 }}>
-                      Email: support@yourclinic.com • Ahmedabad, India
-                    </div>
-                  </div>
-                  <div className="d-flex flex-column flex-sm-row gap-2">
-                    <a href="#cta" className="btn btn-primary hp-btn">
-                      <i className="bi bi-headset me-2" />
-                      Support
-                    </a>
-                    <a href="tel:5552784364" className="btn btn-outline-primary hp-btn hp-btnOutline2">
-                      <i className="bi bi-telephone-outbound me-2" />
-                      Call
-                    </a>
-                  </div>
-                </div>
+              <div className="mt-4">
+                <PrimaryButton className="cta-btn">Book Appointment</PrimaryButton>
               </div>
             </div>
+          </Container>
+
+          <div className="cta-doctors">
+            <img
+              src="https://passtelacare.com/wp-content/uploads/2025/06/cta-box-image.png"
+              alt="Doctors"
+            />
           </div>
         </section>
       </div>
-
-      {/* ================= CSS ================= */}
-      <style>{`
-      
-        :root{
-          --deep-twilight:#03045e;
-          --bright-teal-blue:#0077b6;
-          --turquoise-surf:#00b4d8;
-          --frosted-blue:#90e0ef;
-          --light-cyan:#caf0f8;
-         
-
-        }
-
-        .hp{ overflow-x:hidden; background:#fff; scroll-behavior:smooth; }
-        .hp *{ max-width:100%; }
-
-        /* ✅ Page padding so UI never touches edges */
-        .hp-pagePad{
-          padding-left: clamp(10px, 3.2vw, 26px);
-          padding-right: clamp(10px, 3.2vw, 26px);
-        }
-
-        /* Pills */
-        .hp-pill{
-          display:inline-flex; align-items:center;
-          padding:10px 16px; border-radius:999px;
-          background:var(--bright-teal-blue); color:#fff;
-          font-weight:800; font-size:14px;
-          box-shadow:0 12px 30px rgba(0,119,182,.25);
-        }
-        .hp-outlinePill{
-          display:inline-flex; align-items:center;
-          padding:8px 16px; border-radius:12px;
-          border:1px solid rgba(0,119,182,.35);
-          color:var(--bright-teal-blue);
-          font-weight:800; background:#fff;
-        }
-        .hp-h2{
-          font-size: clamp(26px, 3.2vw, 54px);
-          font-weight:900; color:var(--deep-twilight);
-          letter-spacing:-.5px; line-height:1.05;
-        }
-        .hp-muted{ color:#6b7a90; }
-        .hp-linkSmall{ color:var(--bright-teal-blue); font-size:13px; text-decoration:none; }
-
-        .hp-section{ padding: 86px 0; }
-        .hp-soft{ background:#eaf6ff; border-radius: 22px; }
-
-        /* HERO */
-        .hp-hero{
-          position:relative;
-          padding:30px;
-          margin: 18px 0; /* ✅ already padded by wrapper */
-          border-radius: 28px;
-          overflow:hidden;
-          min-height: 800px;
-          box-shadow: 0 28px 90px rgba(0,0,0,.10);
-        }
-        .hp-heroBg{
-          position:absolute; inset:0;
-          background-size:cover;
-          background-position:center;
-          transform:scale(1.06);
-          animation: hpZoom 9s ease-in-out infinite alternate;
-        }
-        .hp-heroOverlay{
-          position:absolute; inset:0;
-          background:linear-gradient(90deg, rgba(3,4,94,.78) 0%, rgba(3,4,94,.46) 58%, rgba(3,4,94,.10) 100%);
-        }
-        .hp-heroContainer{ position:relative; z-index:2; padding: 62px 12px 172px; }
-        .hp-heroTitle{
-          color:#fff; font-weight:900;
-          font-size: clamp(36px, 5.2vw, 76px);
-          line-height:1;
-          text-shadow: 0 12px 34px rgba(0,0,0,.28);
-        }
-        .hp-heroDesc{ color:rgba(255,255,255,.92); max-width:540px; }
-
-        .hp-btn{
-          border-radius:14px;
-          font-weight:900;
-          padding:12px 18px;
-          box-shadow: 0 18px 45px rgba(0,0,0,.12);
-        }
-        .hp-btnGhost{ border-width:2px; }
-        .hp-btnOutline2{ border-width:2px; }
-
-        .hp-miniStats{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-        .hp-miniStat{
-          background: rgba(255,255,255,.12);
-          border: 1px solid rgba(255,255,255,.18);
-          backdrop-filter: blur(8px);
-          border-radius:16px;
-          padding:10px 12px;
-          min-width: 120px;
-        }
-        .hp-miniNum{ color:#fff; font-weight:900; font-size:20px; line-height:1; }
-        .hp-miniLbl{ color:rgba(255,255,255,.85); font-weight:800; font-size:12px; margin-top:4px; }
-
-        .hp-heroGlass{
-          background: rgba(255,255,255,.10);
-          border: 1px solid rgba(255,255,255,.18);
-          border-radius: 24px;
-          backdrop-filter: blur(12px);
-          box-shadow: 0 20px 55px rgba(0,0,0,.18);
-          color:#fff;
-        }
-        .hp-glassTitle{ font-weight: 900; font-size: 18px; }
-        .hp-miniCard{
-          display:flex; align-items:center; justify-content:center;
-          padding: 12px 12px;
-          border-radius: 16px;
-          background: rgba(255,255,255,.12);
-          border: 1px solid rgba(255,255,255,.18);
-          color:#fff; text-decoration:none; font-weight:900;
-        }
-        .hp-miniCard:hover{ background: rgba(255,255,255,.16); }
-
-        .hp-heroBottom{
-          position:absolute; left:0; right:0;
-          bottom:-78px;
-          padding: 0 12px;
-        }
-        .hp-card{
-          background:rgba(255,255,255,.97);
-          border-radius:22px;
-          box-shadow: 0 20px 55px rgba(0,0,0,.18);
-          backdrop-filter: blur(8px);
-          transition:.22s ease;
-        }
-        .hp-card:hover{ transform: translateY(-6px); }
-        .hp-cardTitle{ font-weight:900; color:var(--deep-twilight); }
-        .hp-cardText{ color:#5f6f88; margin-bottom:0; }
-
-        .hp-iconCircle{
-          width:54px; height:54px; border-radius:999px;
-          display:grid; place-items:center;
-          background:var(--deep-twilight); color:#fff;
-          font-size:20px;
-        }
-        .hp-callChip{
-          display:inline-flex; align-items:center;
-          padding:8px 10px; border-radius:999px;
-          background: rgba(0,119,182,.12);
-          color: var(--deep-twilight);
-          font-weight:900; font-size:12px;
-        }
-        .hp-callRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
-        .hp-phone{ color:#fff; font-weight:900; font-size:16px; text-decoration:none; }
-        .hp-phone2{ color:var(--bright-teal-blue); font-weight:900; font-size:18px; text-decoration:none; }
-
-        /* ABOUT */
-        .hp-aboutCard{
-          border-radius:26px; overflow:hidden;
-          box-shadow: 0 18px 45px rgba(0,0,0,.12);
-          border: 1px solid rgba(0,0,0,.05);
-          background:#fff;
-        }
-        .hp-aboutCard img{ width:100%; height: 320px; object-fit:cover; display:block; }
-        .hp-aboutStat{
-          background: rgba(255,255,255,.86);
-          border: 1px solid rgba(0,0,0,.05);
-          border-radius: 22px;
-          padding: 16px;
-          box-shadow: 0 16px 40px rgba(0,0,0,.06);
-        }
-        .hp-statNum{ font-size:54px; font-weight:900; line-height:1; }
-        .hp-gradText{
-          background: linear-gradient(135deg, var(--deep-twilight), var(--bright-teal-blue));
-          -webkit-background-clip:text; background-clip:text; color:transparent;
-        }
-        .hp-statText{ font-weight:900; color:var(--bright-teal-blue); font-size:16px; }
-        .hp-aboutBadge{
-          display:inline-flex; align-items:center;
-          padding:10px 12px; border-radius:999px;
-          background: rgba(0,180,216,.12);
-          color: var(--deep-twilight);
-          font-weight:900;
-        }
-        .hp-miniFeature{
-          background:#fff;
-          border:1px solid rgba(0,0,0,.04);
-          border-radius: 18px;
-          padding: 14px;
-          box-shadow: 0 16px 40px rgba(0,0,0,.06);
-          height: 100%;
-        }
-        .hp-miniFeatureIcon{
-          width: 44px; height: 44px;
-          border-radius: 14px;
-          display:grid; place-items:center;
-          background: rgba(0,119,182,.12);
-          color: var(--deep-twilight);
-          margin-bottom: 10px;
-          font-size: 18px;
-        }
-
-        /* SERVICES */
-        .hp-serviceCard{
-          background:#fff;
-          border-radius:22px;
-          border:1px solid rgba(0,0,0,.03);
-          box-shadow: 0 16px 40px rgba(0,0,0,.06);
-          transition:.22s ease;
-          position:relative;
-          overflow:hidden;
-        }
-        .hp-serviceCard:hover{ transform: translateY(-6px); }
-        .hp-serviceIcon{
-          width:72px; height:72px;
-          border-radius:18px;
-          display:grid; place-items:center;
-          font-size:28px;
-          color: var(--deep-twilight);
-          border: 1px solid rgba(0,0,0,.04);
-        }
-        .hp-icBg1{ background: rgba(0,119,182,.12); }
-        .hp-icBg2{ background: rgba(0,180,216,.12); }
-        .hp-icBg3{ background: rgba(144,224,239,.18); }
-        .hp-icBg4{ background: rgba(202,240,248,.75); }
-        .hp-icBg5{ background: rgba(3,4,94,.08); }
-        .hp-icBg6{ background: rgba(0,119,182,.10); }
-        .hp-quote{ font-weight:900; color:var(--deep-twilight); }
-        .hp-miniAction{
-          font-size:12px; font-weight:900;
-          color: var(--deep-twilight);
-          background: rgba(3,4,94,.06);
-          padding:6px 10px; border-radius:999px;
-        }
-
-        /* CTA */
-        .hp-ctaImgWrap{
-          position:relative;
-          border-radius:26px;
-          overflow:hidden;
-          box-shadow: 0 20px 60px rgba(0,0,0,.10);
-        }
-        .hp-ctaImg{ width:100%; height:520px; object-fit:cover; display:block; transform:scale(1.02); }
-        .hp-ctaBadge{
-          position:absolute; left:16px; bottom:16px;
-          background: rgba(3,4,94,.92);
-          border: 1px solid rgba(255,255,255,.14);
-          border-radius: 22px;
-          padding: 12px 14px;
-          display:flex; align-items:center;
-          box-shadow: 0 20px 60px rgba(0,0,0,.22);
-        }
-        .hp-ctaBadgeIcon{
-          width:42px; height:42px; border-radius:14px;
-          display:grid; place-items:center;
-          background: rgba(255,255,255,.14);
-          color:#fff; font-size:18px;
-        }
-        .hp-ctaTag{
-          position:absolute; right:14px; top:14px;
-          background: rgba(255,255,255,.92);
-          border: 1px solid rgba(0,0,0,.06);
-          border-radius: 999px;
-          padding: 8px 12px;
-          font-weight: 900;
-          color: var(--deep-twilight);
-          box-shadow: 0 16px 40px rgba(0,0,0,.12);
-          display:flex; align-items:center;
-        }
-
-        /* ✅ HOW WE WORK (new perfect UI) */
-        .hp-how .container{ padding-left: 12px; padding-right: 12px; }
-        .hp-workCard{
-          background:#fff;
-          border:1px solid rgba(0,0,0,.04);
-          border-radius:22px;
-          padding:18px;
-          box-shadow: 0 16px 40px rgba(0,0,0,.06);
-          transition:.22s ease;
-          display:flex;
-          flex-direction:column;
-          gap:10px;
-          height:100%;
-        }
-        .hp-workCard:hover{ transform: translateY(-6px); }
-        .hp-workTop{
-          display:flex;
-          align-items:center;
-          justify-content:space-between;
-          gap:12px;
-        }
-        .hp-workNum{
-          width:44px; height:44px; border-radius:999px;
-          background: rgba(0,119,182,.14);
-          color: var(--deep-twilight);
-          display:grid; place-items:center;
-          font-weight: 900;
-        }
-        .hp-workIcon{
-          width:44px; height:44px; border-radius:16px;
-          background: rgba(202,240,248,.85);
-          border:1px solid rgba(0,0,0,.04);
-          display:grid; place-items:center;
-          color: var(--deep-twilight);
-          font-size: 18px;
-        }
-        .hp-workTitle{
-          font-weight: 900;
-          color: var(--deep-twilight);
-          font-size: 18px;
-        }
-        .hp-workLine{
-          height:1px;
-          background: rgba(3,4,94,.08);
-          margin-top: 4px;
-        }
-        .hp-workLink{
-          text-decoration:none;
-          font-weight: 900;
-          color: var(--bright-teal-blue);
-          display:inline-flex;
-          align-items:center;
-          margin-top:auto;
-        }
-
-        .hp-workSide{
-          position:relative;
-          border-radius:26px;
-          overflow:hidden;
-          background: linear-gradient(135deg, var(--bright-teal-blue), var(--deep-twilight));
-          padding: 18px;
-          box-shadow: 0 20px 60px rgba(0,0,0,.10);
-          display:flex;
-          flex-direction:column;
-          gap:10px;
-        }
-        .hp-workSideTop{
-          display:flex;
-          align-items:flex-start;
-          justify-content:space-between;
-          gap:12px;
-          color:#fff;
-        }
-        .hp-workPct{ font-size:56px; font-weight:900; line-height:1; }
-        .hp-workSub{ font-weight:900; opacity:.95; }
-        .hp-sideChip{
-          background: rgba(255,255,255,.14);
-          border:1px solid rgba(255,255,255,.16);
-          border-radius:999px;
-          padding: 8px 10px;
-          font-weight: 900;
-          color:#fff;
-          white-space:nowrap;
-        }
-        .hp-workFoot{
-          color: rgba(255,255,255,.88);
-          font-weight: 800;
-          font-size: 12px;
-        }
-        .hp-workImgWrap{
-          margin-top:auto;
-          border-radius: 22px;
-          overflow:hidden;
-          border: 1px solid rgba(255,255,255,.14);
-          background: rgba(255,255,255,.06);
-        }
-        .hp-workImg{
-          width:100%;
-          height: 280px;
-          object-fit: cover;
-          display:block;
-          transform: scale(1.01);
-        }
-
-        /* TESTIMONIALS */
-        .hp-testCard{
-          background:#fff;
-          border-radius:26px;
-          box-shadow: 0 16px 45px rgba(0,0,0,.08);
-          min-height: 260px;
-        }
-        .hp-quoteMark{ font-size:52px; color:var(--bright-teal-blue); font-weight:900; line-height:1; }
-        .hp-testText{ font-style:italic; font-weight:900; color:var(--deep-twilight); font-size:18px; line-height:1.35; }
-        .hp-avatar{
-          width:44px; height:44px; border-radius:999px;
-          background:#eaf6ff;
-          border:2px solid rgba(0,119,182,.25);
-        }
-        .hp-stars{ display:flex; gap:6px; color:#f4b400; font-size:16px; }
-
-        .hp-carousel{ position:relative; }
-        .hp-carBtn{ width: 46px; opacity: 1; }
-        .hp-carIcon{
-          width: 46px; height: 46px;
-          border-radius: 999px;
-          background: rgba(3,4,94,.10);
-          display:grid; place-items:center;
-          color: var(--deep-twilight);
-          border: 1px solid rgba(0,0,0,.06);
-        }
-        .hp-indicators{ position: static; margin-top: 12px; gap: 8px; }
-        .hp-indicators [data-bs-target]{
-          width: 8px; height: 8px; border-radius: 999px;
-          background: var(--bright-teal-blue);
-          opacity: .3;
-        }
-        .hp-indicators .active{ opacity: 1; }
-
-        /* PORTFOLIO */
-        .hp-portCard{
-          position:relative;
-          border-radius:26px;
-          overflow:hidden;
-          height: 320px;
-          box-shadow: 0 20px 55px rgba(0,0,0,.12);
-        }
-        .hp-portImg{ width:100%; height:100%; object-fit:cover; display:block; }
-        .hp-portOverlay{
-          position:absolute; inset:0;
-          background: linear-gradient(180deg, rgba(3,4,94,.05) 0%, rgba(3,4,94,.78) 100%);
-        }
-        .hp-portContent{
-          position:absolute;
-          left:18px; right:18px; bottom:18px;
-          color:#fff;
-        }
-        .hp-plus{
-          width:34px; height:34px; border-radius:999px;
-          background: rgba(255,255,255,.18);
-          border:1px solid rgba(255,255,255,.35);
-          display:grid; place-items:center;
-          font-weight:900;
-          margin-bottom:10px;
-        }
-        .hp-portTitle{ font-size:22px; font-weight:900; margin-bottom:10px; }
-        .hp-portBtn{ border-radius:14px; font-weight:900; padding:10px 14px; }
-
-        /* PARTNERS */
-        .hp-partnerCard{
-          background: rgba(255,255,255,.75);
-          border:1px solid rgba(0,0,0,.04);
-          border-radius: 20px;
-          padding: 14px 12px;
-          text-align:center;
-          box-shadow: 0 16px 40px rgba(0,0,0,.06);
-          transition: .22s ease;
-          height: 100%;
-        }
-        .hp-partnerCard:hover{ transform: translateY(-6px); }
-        .hp-partnerIcon{
-          width: 54px; height: 54px;
-          margin: 0 auto;
-          border-radius: 18px;
-          display:grid; place-items:center;
-          font-size: 22px;
-          color: var(--deep-twilight);
-          background: linear-gradient(135deg, rgba(0,119,182,.14), rgba(144,224,239,.35));
-          border:1px solid rgba(0,0,0,.04);
-        }
-        .hp-footerStrip{
-          background: rgba(255,255,255,.80);
-          border:1px solid rgba(0,0,0,.05);
-          border-radius: 22px;
-          padding: 16px;
-          box-shadow: 0 16px 40px rgba(0,0,0,.06);
-        }
-
-        /* Scroll reveal */
-        .hp-reveal{ opacity:0; transform: translateY(14px); transition:.65s ease; will-change: transform, opacity; }
-        .hp-reveal.hp-in{ opacity:1; transform: translateY(0); }
-        .hp-delay1{ transition-delay:.06s; }
-        .hp-delay2{ transition-delay:.14s; }
-
-        /* micro animations */
-        .hp-bounce{ animation: hpBounce 1.6s ease-in-out infinite; }
-        .hp-float{ animation: hpFloat 2.6s ease-in-out infinite; }
-        @keyframes hpZoom{ from{ transform:scale(1.06);} to{ transform:scale(1.12);} }
-        @keyframes hpBounce{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} }
-        @keyframes hpFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(7px);} }
-
-        /* RESPONSIVE */
-        @media (max-width: 991px){
-          .hp-heroOverlay{
-            background: linear-gradient(180deg, rgba(3,4,94,.80) 0%, rgba(3,4,94,.50) 62%, rgba(3,4,94,.18) 100%);
-          }
-          .hp-heroContainer{ padding: 52px 10px 22px; }
-          .hp-heroBottom{ position: static; margin-top: 22px; padding: 0; }
-          .hp-section{ padding: 68px 0; }
-          .hp-ctaImg{ height: 380px; }
-          .hp-workImg{ height: 260px; }
-          .hp-soft{ border-radius: 18px; }
-        }
-
-        @media (max-width: 575px){
-          .hp-hero{ min-height: 700px; border-radius: 22px; }
-          .hp-heroTitle{ font-size: 40px; }
-          .hp-miniStat{ min-width: 104px; }
-          .hp-aboutCard img{ height: 240px; }
-          .hp-statNum{ font-size: 46px; }
-          .hp-portCard{ height: 280px; }
-          .hp-ctaImg{ height: 320px; }
-          .hp-workPct{ font-size: 48px; }
-          .hp-workImg{ height: 240px; }
-        }
-      `}</style>
-    </div>
+    </>
   );
 }

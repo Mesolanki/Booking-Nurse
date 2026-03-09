@@ -17,11 +17,11 @@ import HomePage from './Pages/HomePage'
 import LiveNurses from './Pages/Functionality/Live Call/LiveNurses'
 import LabBookingForm from './Pages/Functionality/LabBookingForm/LabBookingForm'
 import EquipmentList from './Pages/Functionality/RentEquipment/EquipmentList'
-import IllnessManagement from './Pages/Functionality/Illness_Management/IllnessManagement'
-import WoundCare from './Pages/Functionality/WoundCare/WoundCare'
-import PostSurgery from './Pages/Functionality/PostSurgery/PostSurgery'
-import PhysicalTherapy from './Pages/Functionality/PhysicalTherapy/PhysicalTherapy'
-import PallativeCare from './Pages/Functionality/PalliativeCare/PallativeCare'
+// import IllnessManagement from './Pages/Functionality/Illness_Management/IllnessManagement'
+// import WoundCare from './Pages/Functionality/WoundCare/WoundCare'
+// import PostSurgery from './Pages/Functionality/PostSurgery/PostSurgery'
+// import PhysicalTherapy from './Pages/Functionality/PhysicalTherapy/PhysicalTherapy'
+// import PallativeCare from './Pages/Functionality/PalliativeCare/PallativeCare'
 
 
 const App = () => {
@@ -53,13 +53,9 @@ const App = () => {
         {/* <Route path="/Nursefrom" element={<NurseRegistrationForm/>} /> */}
         <Route path='/services/medical-equipment-assistance' element={<EquipmentList />} />
         <Route path='/services/online-video-consultation' element={<LiveNurses />} />
-        <Route path='/services/chronic-illness-management' element={<IllnessManagement />} />
+        {/* <Route path='/services/chronic-illness-management' element={<IllnessManagement />} /> */}
         <Route path='/services/lab-test-assistance' element={<LabBookingForm />} />
-        <Route path="/book-nurse/appointment" element={<Appointment />} />
-        <Route path='/services/post-surgery' element={<PostSurgery />} />
-        <Route path='/services/wound-care' element={<WoundCare />} />
-        <Route path='/services/palliative-care' element={<PallativeCare />} />
-        <Route path='/services/physical-therapy-assistance' element={<PhysicalTherapy />} />
+        <Route path="/appointment/:id" element={<Appointment />} />
       </Routes>
       <Footer />
     </div>

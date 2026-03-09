@@ -13,7 +13,7 @@ import {
 import './AllServices.css';
 import Hero from '../components/Hero';
 import { useNavigate } from 'react-router-dom';
-import api  from '../Service/Api';
+import api from '../Service/Api';
 
 const iconMap = {
     Bandage: Bandage,
@@ -23,12 +23,11 @@ const iconMap = {
     Accessibility: Accessibility,
     HeartHandshake: HeartHandshake,
     TestTube: TestTube,
-    Video: Video,
-    
+    Video: Video
 };
 
 const AllServices = () => {
-    const [services, setServices] = useState([]);
+    const [services, setServices] = useState([]); // Initialize as empty array
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -53,7 +52,9 @@ const AllServices = () => {
             <div className="container">
                 <section className="services-grid">
                     {services.map((service) => {
-                        const IconComponent = iconMap[service.icon] || Activity;
+                        // 2. Dynamically pick the right icon component
+                        // Assumes service.icon matches a key in iconMap (e.g. "Pill")
+                        const IconComponent = iconMap[service.icon] || Activity; 
 
                         return (
                             <div key={service.id} className="service-card">
@@ -63,18 +64,21 @@ const AllServices = () => {
                                         <IconComponent size={32} />
                                     </div>
                                 </div>
-
+                                
                                 <h2 className="card-title">{service.title}</h2>
-
+                                
                                 <p className="card-desc">
                                     {service.description || "Providing professional care tailored to your needs."}
                                 </p>
-
-                                <button
-                                    className="explore-link"
-                                    onClick={() => navigate(`/services/${service.title.toLowerCase().replace(/\s+/g, '-')}`)}
+                                
+                                <button 
+                                    className="explore-link" 
+                                  onClick={() =>
+  navigate(`/nurs/${service.title.toLowerCase()}`)
+}
                                 >
                                     Explore More
+                                  
                                 </button>
                             </div>
                         );

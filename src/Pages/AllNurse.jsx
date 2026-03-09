@@ -45,7 +45,7 @@ export default function AllNurse() {
 
       <div className="nurse-grid">
         {nurses.map((nurse) => (
-          <div key={nurse.id} className="nurse-card" onClick={() => navigasion(`/SingleNursefrom/:${nurse.id}`)}>
+          <div key={nurse.id} className="nurse-card" onClick={() => navigasion(`/SingleNursefrom/${nurse.id}`)}>
             <div className="nurse-image-container">
               <img
                 src={nurse.image}

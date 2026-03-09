@@ -35,9 +35,7 @@ export default function Login() {
     const user = patients.find(p => p.email === loginData.email && p.password === loginData.password);
 
     if (user) {
-      sessionStorage.setItem("activeUser", user.email);
-      // This custom event forces the Navbar to refresh the user state
-      window.dispatchEvent(new Event("storage"));
+      const res= api.post("PatientLogin",user)
       navigate("/");
     } else {
       setMessage("Invalid email or password");
