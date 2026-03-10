@@ -8,7 +8,7 @@ import './Auth.css';
 
 export default function Login() {
   const [view, setView] = useState("login");
-  const [loginData, setLoginData] = useState({ email: "", password: "", otp: "" });
+  const [loginData, setLoginData] = useState({ email: "", password: "", otp: "",type:"" });
   const [patients, setPatients] = useState([]);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -30,17 +30,37 @@ export default function Login() {
     setLoginData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const user = patients.find(p => p.email === loginData.email && p.password === loginData.password);
+  console.log(patients)
+  const handleLogin = async (e) => {
+  e.preventDefault();
 
-    if (user) {
-      const res= api.post("PatientLogin",user)
-      navigate("/");
-    } else {
-      setMessage("Invalid email or password");
-    }
+  const user = patients.find(
+    p => p.email === loginData.email && p.password === loginData.password
+  );
+
+
+  if (!user) {
+    setMessage("Invalid email or password");
+    return;
   }
+
+  if (user.type !== loginData.type) {
+    setMessage("Invalid Radio type");
+    return;
+  }
+
+  await api.post("PatientLogin", user);
+  
+if (loginData.type === "Nurse") {
+    navigate("/Nursefrom")
+    return;
+  }
+  
+    navigate("/");
+
+    
+  
+};
     return (
       <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light px-3">
         <div className="auth-glass-card w-100 shadow-lg border-0 overflow-hidden" style={{ maxWidth: '450px' }}>
@@ -78,6 +98,11 @@ export default function Login() {
                     <input type="password" name="password" className="form-control py-3 ps-5 rounded-4 border-light bg-light" placeholder="••••••••" onChange={handleChange} required />
                   </div>
                 </div>
+          
+                 <div className='mb-5'>
+                <input type="radio" name='type' value="paisent" checked={loginData.type==="paisent"} onChange={handleChange} />paisent
+                <input type="radio" name='type' value="Nurse" checked={loginData.type==="Nurse"}  onChange={handleChange} />Nurse
+              </div>
 
                 <button type="submit" style={{ backgroundColor: '#0077b6' }} className="btn btn-primary w-100 py-3 rounded-4 fw-bold shadow-sm border-0 d-flex align-items-center justify-content-center gap-2">
                   Sign In <ArrowRight size={18} />

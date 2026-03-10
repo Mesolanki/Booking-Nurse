@@ -27,7 +27,7 @@ const iconMap = {
 };
 
 const AllServices = () => {
-    const [services, setServices] = useState([]); // Initialize as empty array
+    const [services, setServices] = useState([]); 
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -52,8 +52,7 @@ const AllServices = () => {
             <div className="container">
                 <section className="services-grid">
                     {services.map((service) => {
-                        // 2. Dynamically pick the right icon component
-                        // Assumes service.icon matches a key in iconMap (e.g. "Pill")
+                       
                         const IconComponent = iconMap[service.icon] || Activity; 
 
                         return (

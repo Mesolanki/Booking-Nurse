@@ -136,7 +136,7 @@
      color: var(--deep-twilight);
  }
 
- /* underline animation */
+ 
  .pm-link::after {
      content: "";
      position: absolute;
@@ -176,7 +176,7 @@
      display: none;
  }
 
- /* Mobile collapse animation (no bootstrap JS needed) */
+ 
  .pm-collapse {
      overflow: hidden;
      max-height: 0;

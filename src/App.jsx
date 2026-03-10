@@ -17,6 +17,8 @@ import HomePage from './Pages/HomePage'
 import LiveNurses from './Pages/Functionality/Live Call/LiveNurses'
 import LabBookingForm from './Pages/Functionality/LabBookingForm/LabBookingForm'
 import EquipmentList from './Pages/Functionality/RentEquipment/EquipmentList'
+import NurseRegistrationForm from './components/NurseRegistrationForm'
+import Nursingsloat from './components/Nursingsloat'
 // import IllnessManagement from './Pages/Functionality/Illness_Management/IllnessManagement'
 // import WoundCare from './Pages/Functionality/WoundCare/WoundCare'
 // import PostSurgery from './Pages/Functionality/PostSurgery/PostSurgery'
@@ -50,12 +52,13 @@ const App = () => {
         <Route path="/SingleNursefrom/:id" element={<SingleNurse />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Login" element={<Login />} />
-        {/* <Route path="/Nursefrom" element={<NurseRegistrationForm/>} /> */}
+        <Route path="/Nursefrom" element={<NurseRegistrationForm/>} />
         <Route path='/services/medical-equipment-assistance' element={<EquipmentList />} />
         <Route path='/services/online-video-consultation' element={<LiveNurses />} />
         {/* <Route path='/services/chronic-illness-management' element={<IllnessManagement />} /> */}
         <Route path='/services/lab-test-assistance' element={<LabBookingForm />} />
         <Route path="/appointment/:id" element={<Appointment />} />
+        <Route path="/Nursingsloat" element={<Nursingsloat/>} />
       </Routes>
       <Footer />
     </div>

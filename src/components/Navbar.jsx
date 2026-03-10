@@ -5,7 +5,6 @@ import "./Navbar.css";
 import api from "../Service/Api";
 
 export default function Navbar() {
-
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [profile, setProfile] = useState(null);
@@ -13,55 +12,29 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const close = () => setOpen(false);
+  
+ useEffect(() => {
+   fetchUserProfile();
+  });
 
-  // Fetch Logged User From JSON Server
   const fetchUserProfile = async () => {
-    try {
-
       const res = await api.get("/PatientLogin");
-
       if (res.data.length > 0) {
-        setProfile(res.data[0]); // logged user
+        setProfile(res.data[0]);
       } else {
         setProfile(null);
       }
-
-    } catch (err) {
-      console.error("Error fetching profile:", err);
-    }
   };
 
-  useEffect(() => {
 
-    const onScroll = () => setScrolled(window.scrollY > 10);
+ 
 
-    fetchUserProfile();
-
-    window.addEventListener("scroll", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-
-  }, []);
-
-  // Logout (clear PatientLogin)
   const handleLogout = async () => {
-
-    try {
-
       if (profile?.id) {
         await api.delete(`/PatientLogin/${profile.id}`);
       }
-
       setProfile(null);
-
       navigate("/Login");
-
-    } catch (err) {
-      console.log(err);
-    }
-
   };
 
   return (
@@ -71,17 +44,22 @@ export default function Navbar() {
 
         <div className="d-flex align-items-center justify-content-between">
 
-          {/* Logo */}
+
           <Link className="pm-brand" to="/" onClick={close}>
             <div className="pm-logo" />
             <span>PORTEA</span>
           </Link>
 
-          {/* Desktop Menu */}
+
           <div className="d-none d-lg-flex pm-links align-items-center">
 
             <Link to="/" className="pm-link">Home</Link>
-            <Link to="/services" className="pm-link">All Services</Link>
+            
+            {(!profile || profile?.type === "paisent") && (
+              <Link to="/services" className="pm-link">
+                All Services
+              </Link>
+            )}
             <Link to="/about" className="pm-link">About Us</Link>
             <Link to="/contact" className="pm-link">Contact</Link>
 
@@ -126,6 +104,7 @@ export default function Navbar() {
                       {profile.firstname} {profile.lastname}
                     </p>
                     <small className="text-muted">{profile.email}</small>
+                    <small className="text-muted">{profile.type}</small>
                   </li>
 
                   <li>
@@ -159,7 +138,6 @@ export default function Navbar() {
 
           </div>
 
-          {/* Mobile Toggle Button */}
           <button
             className={`d-lg-none pm-toggler ${open ? "pm-open" : ""}`}
             onClick={() => setOpen(!open)}
@@ -177,7 +155,7 @@ export default function Navbar() {
 
         </div>
 
-        {/* Mobile Menu */}
+
         <div className={`pm-collapse d-lg-none ${open ? "open" : ""}`}>
 
           <div className="pm-mobile-card mt-3">
@@ -185,10 +163,11 @@ export default function Navbar() {
             <div className="d-grid gap-2">
 
               <Link className="pm-link" to="/" onClick={close}>Home</Link>
-              <Link className="pm-link" to="/services" onClick={close}>All Services</Link>
+               {(!profile || profile?.type === "paisent") && (
+               <Link className="pm-link" to="/services" onClick={close}>All Services</Link>
+            )}
               <Link className="pm-link" to="/about" onClick={close}>About Us</Link>
               <Link className="pm-link" to="/contact" onClick={close}>Contact</Link>
-
               <hr />
 
               {!profile ? (

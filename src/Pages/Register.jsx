@@ -8,7 +8,7 @@ export default function Register() {
   const [showSuccess, setShowSuccess] = useState(false); // Success popup state
   const [data, setdata] = useState({
     firstname: "", lastname: "", contect: "", age: "",
-    address: "", email: "", password: "", photo: ""
+    address: "", email: "", password: "", photo: "",type:""
   });
 
   const handleinput = (e) => {
@@ -163,6 +163,10 @@ export default function Register() {
                 <input type="file" className="form-control py-2 ps-5 rounded-4 border-light bg-light" accept="image/*" onChange={handleImage} />
               </div>
             </div>
+              <div className='mb-5'>
+                <input type="radio" name='type' value="paisent" checked={data.type==="paisent"} onChange={handleinput} />paisent
+                <input type="radio" name='type' value="Nurse" checked={data.type==="Nurse"}  onChange={handleinput} />Nurse
+              </div>
 
             <button type="submit" style={{ backgroundColor: '#0077b6' }} className="btn btn-primary w-100 py-3 rounded-4 fw-bold shadow-sm border-0 d-flex align-items-center justify-content-center gap-2">
               Complete Registration <ArrowRight size={18} />
