@@ -19,6 +19,7 @@ import LabBookingForm from './Pages/Functionality/LabBookingForm/LabBookingForm'
 import EquipmentList from './Pages/Functionality/RentEquipment/EquipmentList'
 import NurseRegistrationForm from './components/NurseRegistrationForm'
 import Nursingsloat from './components/Nursingsloat'
+import Daskbord from './Pages/Daskbord'
 // import IllnessManagement from './Pages/Functionality/Illness_Management/IllnessManagement'
 // import WoundCare from './Pages/Functionality/WoundCare/WoundCare'
 // import PostSurgery from './Pages/Functionality/PostSurgery/PostSurgery'
@@ -59,6 +60,7 @@ const App = () => {
         <Route path='/services/lab-test-assistance' element={<LabBookingForm />} />
         <Route path="/appointment/:id" element={<Appointment />} />
         <Route path="/Nursingsloat" element={<Nursingsloat/>} />
+        <Route path="/Daskbord" element={<Daskbord/>} />
       </Routes>
       <Footer />
     </div>

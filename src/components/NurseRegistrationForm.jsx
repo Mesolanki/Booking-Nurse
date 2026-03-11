@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../Service/Api";
 
 function NurseRegistrationForm() {
   const navigasion=useNavigate()
@@ -34,10 +35,11 @@ function NurseRegistrationForm() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    await api.post("/nurses",formData)
     console.log("Form Data Submitted:", formData)
-    navigasion("/Nursingsloat")
+    // navigasion("/Nursingsloat")
   };
 
   return (

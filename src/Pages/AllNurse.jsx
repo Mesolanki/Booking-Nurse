@@ -18,9 +18,8 @@ export default function AllNurse() {
     const res = await api.get("/nurses");
 
     const filternurse = res.data.filter(
-      (t) =>
-        t.category.toLowerCase() === title
-    );
+  (t) => t.category?.toLowerCase() === title?.toLowerCase()
+);
     
     setNurses(filternurse);
   } catch (error) {
